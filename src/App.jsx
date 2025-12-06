@@ -121,9 +121,7 @@ export default function App() {
 
   // Função para abrir o WhatsApp
   const openWhatsApp = () => {
-    // Simulando ação em ambiente seguro
-    console.log("Abrindo WhatsApp...");
-    // window.open('https://wa.me/5511977538041', '_blank');
+    window.open('https://wa.me/5511977538041', '_blank');
   };
 
   // Lógica de "Live Data" simulada
