@@ -33,6 +33,14 @@ import {
 
 // --- Componentes Auxiliares ---
 
+const SearchIcon = ({ size, className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+);
+
+const FileText = ({ size, className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+);
+
 const Reveal = ({ children, delay = 0 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
@@ -64,14 +72,40 @@ const Reveal = ({ children, delay = 0 }) => {
   );
 };
 
-const BankLogo = ({ name, color }) => (
-  <div className="flex items-center gap-2 group cursor-default opacity-60 hover:opacity-100 transition-opacity duration-300 transform hover:scale-105">
-    <div className={`p-2 rounded-lg bg-slate-50 border border-slate-100 group-hover:border-${color}-200 transition-colors`}>
-      <Building2 className={`text-slate-400 group-hover:text-${color}-600 transition-colors w-6 h-6 md:w-8 md:h-8`} />
+// Componente Avatar Seguro: Tenta carregar a imagem, se falhar mostra as iniciais
+const SafeAvatar = ({ src, alt, initials, colorClass }) => {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <div className="w-full h-full relative">
+      {!imgError ? (
+        <img 
+          src={src} 
+          alt={alt} 
+          className="w-full h-full object-cover" 
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <div className={`w-full h-full flex items-center justify-center ${colorClass} text-white font-bold text-3xl`}>
+          {initials}
+        </div>
+      )}
     </div>
-    <span className="text-xl md:text-2xl font-bold text-slate-400 group-hover:text-slate-700 transition-colors">{name}</span>
-  </div>
-);
+  );
+};
+
+// Componente para Logos dos Bancos (Agora aceita imagem)
+const BankLogo = ({ src, alt }) => {
+  return (
+    <div className="h-12 md:h-16 w-32 md:w-40 flex items-center justify-center transition-transform duration-300 hover:scale-110">
+      <img 
+        src={src} 
+        alt={alt} 
+        className="max-h-full max-w-full object-contain"
+      />
+    </div>
+  );
+};
 
 // --- Componente Principal ---
 
@@ -87,7 +121,9 @@ export default function App() {
 
   // Função para abrir o WhatsApp
   const openWhatsApp = () => {
-    window.open('https://wa.me/5511977538041', '_blank');
+    // Simulando ação em ambiente seguro
+    console.log("Abrindo WhatsApp...");
+    // window.open('https://wa.me/5511977538041', '_blank');
   };
 
   // Lógica de "Live Data" simulada
@@ -111,15 +147,18 @@ export default function App() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
       const sections = ['hero', 'qualificacao', 'solucoes', 'metodologia', 'quem-somos', 'faq', 'oferta'];
-      const current = sections.find(section => {
+      
+      // Encontrar qual seção está visível
+      for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          return rect.top >= 0 && rect.top <= 300;
+          if (rect.top >= -200 && rect.top <= 400) {
+            setActiveSection(section);
+            break;
+          }
         }
-        return false;
-      });
-      if (current) setActiveSection(current);
+      }
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -180,13 +219,13 @@ export default function App() {
           
           <nav className={`hidden md:flex items-center gap-8 text-sm font-medium transition-colors duration-500 ${scrolled ? 'text-slate-600' : 'text-slate-300'}`}>
             {['Quem Somos', 'Soluções', 'Metodologia', 'Perfil Ideal'].map((item) => {
-              const id = item === 'Perfil Ideal' ? 'qualificacao' : item.toLowerCase().replace(' ', '-');
+              const id = item === 'Perfil Ideal' ? 'qualificacao' : item === 'Quem Somos' ? 'quem-somos' : item.toLowerCase().replace(' ', '-');
               const isActive = activeSection === id;
               return (
                 <button 
                   key={item}
                   onClick={() => scrollToSection(id)} 
-                  className={`relative group py-2 transition-colors ${isActive ? 'text-blue-600 font-semibold' : 'hover:text-blue-500'}`}
+                  className={`relative group py-2 transition-colors ${isActive && scrolled ? 'text-blue-600 font-semibold' : isActive ? 'text-white font-semibold' : scrolled ? 'hover:text-blue-500' : 'hover:text-white'}`}
                 >
                   {item}
                   <span className={`absolute bottom-0 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
@@ -220,7 +259,7 @@ export default function App() {
         {/* Mobile Menu */}
         <div className={`fixed inset-0 bg-white z-[65] pt-28 px-6 flex flex-col gap-6 transform transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
             {['Quem Somos', 'Soluções', 'Metodologia', 'Perfil Ideal'].map((item) => {
-               const id = item === 'Perfil Ideal' ? 'qualificacao' : item.toLowerCase().replace(' ', '-');
+               const id = item === 'Perfil Ideal' ? 'qualificacao' : item === 'Quem Somos' ? 'quem-somos' : item.toLowerCase().replace(' ', '-');
                return (
                   <button 
                     key={item}
@@ -243,8 +282,9 @@ export default function App() {
       {/* 2. HERO SECTION */}
       <section id="hero" className="bg-[#0f172a] min-h-[90vh] md:min-h-screen flex items-center pt-32 pb-16 md:pt-48 md:pb-32 relative overflow-hidden">
         {/* Background Effects */}
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
-        <div className="absolute top-[-20%] right-[-10%] w-[300px] md:w-[800px] h-[300px] md:h-[800px] bg-blue-600/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none animate-pulse-slow"></div>
+        <div className="absolute inset-0 bg-slate-900 opacity-90"></div>
+        {/* Abstract shapes simulation */}
+        <div className="absolute top-[-20%] right-[-10%] w-[300px] md:w-[800px] h-[300px] md:h-[800px] bg-blue-600/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none animate-pulse"></div>
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
@@ -292,10 +332,10 @@ export default function App() {
               <Reveal delay={300}>
                  <div className="relative w-full aspect-square flex items-center justify-center scale-90 lg:scale-100">
                     
-                    {/* Orbit Rings (Efeito 3D) */}
-                    <div className="absolute w-[350px] h-[350px] lg:w-[400px] lg:h-[400px] border border-blue-500/10 rounded-full animate-[spin_40s_linear_infinite]"></div>
-                    <div className="absolute w-[450px] h-[450px] lg:w-[500px] lg:h-[500px] border border-blue-500/5 rounded-full animate-[spin_60s_linear_infinite_reverse]"></div>
-                    <div className="absolute w-[550px] h-[550px] lg:w-[600px] lg:h-[600px] border border-slate-700/20 rounded-full animate-[spin_80s_linear_infinite]"></div>
+                    {/* Orbit Rings (Efeito 3D simulado) */}
+                    <div className="absolute w-[350px] h-[350px] lg:w-[400px] lg:h-[400px] border border-blue-500/10 rounded-full animate-spin [animation-duration:40s]"></div>
+                    <div className="absolute w-[450px] h-[450px] lg:w-[500px] lg:h-[500px] border border-blue-500/5 rounded-full animate-spin [animation-duration:60s] direction-reverse"></div>
+                    <div className="absolute w-[550px] h-[550px] lg:w-[600px] lg:h-[600px] border border-slate-700/20 rounded-full animate-spin [animation-duration:80s]"></div>
 
                     {/* Central Core */}
                     <div className="relative bg-[#0F172A]/80 p-8 lg:p-10 rounded-[2rem] border border-blue-500/30 backdrop-blur-xl shadow-2xl z-20 text-center w-80 lg:w-96 transform hover:scale-105 transition-transform duration-500">
@@ -306,14 +346,14 @@ export default function App() {
                        <p className="text-slate-400 text-xs lg:text-sm leading-relaxed">Governança, Auditoria e Segurança Enterprise aplicados ao seu negócio.</p>
                        
                        {/* Floating Stats */}
-                       <div className="absolute -right-12 -top-6 lg:-right-16 bg-slate-800/90 p-3 lg:p-4 rounded-xl border border-slate-600 backdrop-blur-md shadow-xl animate-bounce-slow">
+                       <div className="absolute -right-12 -top-6 lg:-right-16 bg-slate-800/90 p-3 lg:p-4 rounded-xl border border-slate-600 backdrop-blur-md shadow-xl animate-bounce">
                           <div className="flex items-center gap-3 mb-1">
                              <TrendingUp size={18} className="text-emerald-400"/>
                              <span className="text-xs lg:text-sm font-bold text-white">Margem +18%</span>
                           </div>
                        </div>
 
-                       <div className="absolute -left-10 bottom-8 lg:-left-12 bg-slate-800/90 p-3 lg:p-4 rounded-xl border border-slate-600 backdrop-blur-md shadow-xl animate-bounce-slow" style={{animationDelay: '1.5s'}}>
+                       <div className="absolute -left-10 bottom-8 lg:-left-12 bg-slate-800/90 p-3 lg:p-4 rounded-xl border border-slate-600 backdrop-blur-md shadow-xl animate-bounce" style={{animationDelay: '1.5s'}}>
                           <div className="flex items-center gap-3">
                              <ShieldCheck size={18} className="text-blue-400"/>
                              <span className="text-xs lg:text-sm font-bold text-white">Compliance 100%</span>
@@ -327,7 +367,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 2. SOCIAL PROOF (LOGOS BANCÁRIOS) */}
+      {/* 2. SOCIAL PROOF (LOGOS BANCÁRIOS - IMAGENS ATUALIZADAS) */}
       <section className="py-12 md:py-16 border-b border-slate-200 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-8 md:mb-10">
@@ -335,10 +375,10 @@ export default function App() {
              <p className="text-slate-500 text-xs md:text-sm font-light px-4">Onde nossos sócios lideraram projetos críticos que processam <strong className="text-slate-700">R$500 bilhões/ano</strong></p>
           </div>
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-24 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 mb-8 md:mb-16">
-            <BankLogo name="Itaú" color="orange" />
-            <BankLogo name="Santander" color="red" />
-            <BankLogo name="Bradesco" color="red" />
-            <BankLogo name="C6 Bank" color="slate" />
+            <BankLogo src="https://lh3.googleusercontent.com/d/1bXUkbivSYCX8TZ69ymv4SUmuWSYdJRGG" alt="Itaú" />
+            <BankLogo src="https://lh3.googleusercontent.com/d/1W8XyBIwJxzdSBxkJfmHy4hxNG03mO6mh" alt="Santander" />
+            <BankLogo src="https://lh3.googleusercontent.com/d/1CfUiS1YSi9d0lps8HDgHiN1IWpZShphW" alt="Bradesco" />
+            <BankLogo src="https://lh3.googleusercontent.com/d/1aj_5IETgqNayEtx0fh42DHVaT-p79-Bk" alt="C6 Bank" />
           </div>
         </div>
       </section>
@@ -508,9 +548,13 @@ export default function App() {
 
             {/* Pilar 2: Engenharia de Dados (Destaque) */}
             <Reveal delay={200}>
-              <div className="bg-[#0B1120] rounded-3xl p-6 md:p-8 border border-slate-700 shadow-2xl hover:shadow-blue-900/20 transition-all duration-300 transform md:scale-105 h-full flex flex-col group relative overflow-hidden z-10 ring-2 ring-blue-500/20">
+              <div className="bg-[#0B1120] rounded-3xl p-6 md:p-8 border border-slate-700 shadow-2xl hover:shadow-blue-900/20 transition-all duration-300 transform md:scale-105 h-full flex flex-col group relative z-10 ring-2 ring-blue-500/20">
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-[9px] md:text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-20">NOSSO DNA</span>
-                <div className="absolute top-0 right-0 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl group-hover:bg-blue-600/20 transition-all"></div>
+                {/* Efeito de fundo movido para um container interno para não cortar o "NOSSO DNA" */}
+                <div className="absolute inset-0 rounded-3xl overflow-hidden z-0 pointer-events-none">
+                    <div className="absolute top-0 right-0 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl group-hover:bg-blue-600/20 transition-all"></div>
+                </div>
+                
                 <div className="w-14 h-14 md:w-16 md:h-16 bg-slate-800 rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:bg-white transition-colors duration-300 relative z-10">
                   <Database className="text-white group-hover:text-[#0B1120] transition-colors duration-300 w-6 h-6 md:w-8 md:h-8" />
                 </div>
@@ -618,17 +662,24 @@ export default function App() {
             
             {/* Sócio 1: Felipe */}
             <Reveal delay={100}>
-              <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-slate-200 hover:border-blue-400 transition-colors shadow-sm flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left">
+              <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-slate-200 hover:border-blue-400 transition-colors shadow-sm flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left h-full">
                   <div className="w-28 h-28 md:w-32 md:h-32 shrink-0 bg-slate-200 rounded-full overflow-hidden border-4 border-slate-50 shadow-md">
-                      <img src="https://media.licdn.com/dms/image/v2/D4D03AQFNYYE3f5WVKA/profile-displayphoto-shrink_200_200/B4DZPaj_vlFcAg-/0/1735569947750?e=1740614400&v=beta&t=oJbClaPqDOj6SxVrMZIoVgjqWc6i18_YVj0C4k5yIZw" alt="Felipe Belisário" className="w-full h-full object-cover" />
+                      {/* TENTATIVA 1: Link Direto do Google (Formato alternativo) */}
+                      <SafeAvatar 
+                        src="https://lh3.googleusercontent.com/d/10hDQlBxrz6mwTOg7NjkwDq83kFA2hQzb" 
+                        alt="Felipe Belisário" 
+                        initials="FB"
+                        colorClass="bg-blue-600"
+                      />
                   </div>
                   <div className="flex-grow w-full">
-                     <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start mb-2 gap-2 sm:gap-0">
-                        <div>
+                     {/* Texto Original Restaurado */}
+                     <div className="flex flex-col xl:flex-row justify-between items-center sm:items-start xl:items-center mb-2 gap-2">
+                        <div className="text-center sm:text-left">
                            <h3 className="text-xl font-bold text-slate-900">Felipe Belisário</h3>
                            <p className="text-blue-600 text-sm font-bold">Arquiteto de Soluções & Estratégia</p>
                         </div>
-                        <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-1 rounded-full border border-amber-200 whitespace-nowrap flex items-center gap-1"><Award size={10}/> Prêmio de Inovação Acadêmica</span>
+                        <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-1 rounded-full border border-amber-200 flex items-center gap-1 shrink-0 text-center sm:text-left"><Award size={10}/> Prêmio de Inovação Acadêmica</span>
                      </div>
                      
                      <div className="flex gap-2 mb-4 flex-wrap justify-center sm:justify-start">
@@ -655,17 +706,24 @@ export default function App() {
 
             {/* Sócio 2: Késsia */}
             <Reveal delay={200}>
-              <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-slate-200 hover:border-purple-400 transition-colors shadow-sm flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left">
+              <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-slate-200 hover:border-purple-400 transition-colors shadow-sm flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left h-full">
                   <div className="w-28 h-28 md:w-32 md:h-32 shrink-0 bg-slate-200 rounded-full overflow-hidden border-4 border-slate-50 shadow-md">
-                      <img src="https://media.licdn.com/dms/image/v2/D4D03AQEuZH_zQqVV5g/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1703007119711?e=1740614400&v=beta&t=m7FgH8B3t3GdzovVkdJVnrqtEfCzEBWY15xBfaCMTi8" alt="Késsia Natany" className="w-full h-full object-cover" />
+                      {/* TENTATIVA 1: Link Direto do Google (Formato alternativo) */}
+                      <SafeAvatar 
+                        src="https://lh3.googleusercontent.com/d/1pA1JSUXZ4se7nlJLDPGrDj4CjhzT43Nv" 
+                        alt="Késsia Natany" 
+                        initials="KN"
+                        colorClass="bg-purple-600"
+                      />
                   </div>
                   <div className="flex-grow w-full">
-                     <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start mb-2 gap-2 sm:gap-0">
-                        <div>
+                     {/* Texto Original Restaurado */}
+                     <div className="flex flex-col xl:flex-row justify-between items-center sm:items-start xl:items-center mb-2 gap-2">
+                        <div className="text-center sm:text-left">
                            <h3 className="text-xl font-bold text-slate-900">Késsia Natany</h3>
                            <p className="text-purple-600 text-sm font-bold">Data Scientist & Operações</p>
                         </div>
-                        <span className="bg-purple-100 text-purple-800 text-[10px] font-bold px-2 py-1 rounded-full border border-purple-200 whitespace-nowrap flex items-center gap-1"><Award size={10}/> Lead Scientist</span>
+                        <span className="bg-purple-100 text-purple-800 text-[10px] font-bold px-2 py-1 rounded-full border border-purple-200 flex items-center gap-1 shrink-0"><Award size={10}/> Lead Scientist</span>
                      </div>
                      
                      <div className="flex gap-2 mb-4 flex-wrap justify-center sm:justify-start">
@@ -723,7 +781,8 @@ export default function App() {
 
       {/* 9. CTA FINAL (OFERTA) */}
       <section id="oferta" className="py-16 md:py-24 bg-[#0B1120] relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        {/* Simulação de textura */}
+        <div className="absolute inset-0 bg-slate-900 opacity-50"></div>
         <div className="container mx-auto px-6 relative z-10 max-w-4xl text-center">
           <Reveal>
             <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
@@ -830,12 +889,3 @@ export default function App() {
     </div>
   );
 }
-
-// Icon components missing from imports
-const SearchIcon = ({ size, className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-);
-
-const FileText = ({ size, className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-);
