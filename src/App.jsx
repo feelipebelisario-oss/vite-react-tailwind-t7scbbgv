@@ -84,6 +84,7 @@ const SafeAvatar = ({ src, alt, initials, colorClass }) => {
           alt={alt} 
           className="w-full h-full object-cover" 
           onError={() => setImgError(true)}
+          referrerPolicy="no-referrer"
         />
       ) : (
         <div className={`w-full h-full flex items-center justify-center ${colorClass} text-white font-bold text-3xl`}>
@@ -101,7 +102,8 @@ const BankLogo = ({ src, alt }) => {
       <img 
         src={src} 
         alt={alt} 
-        className="max-h-full max-w-full object-contain"
+        className="max-h-full max-w-full object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+        referrerPolicy="no-referrer"
       />
     </div>
   );
@@ -198,7 +200,9 @@ export default function App() {
 
       {/* HEADER / NAV */}
       <header 
-        className={`fixed w-full top-[38px] z-[40] transition-all duration-500 ${
+        className={`fixed w-full z-[70] transition-all duration-500 ${
+          isMenuOpen ? 'top-0' : 'top-[38px]'
+        } ${
           scrolled || isMenuOpen
             ? 'bg-white/95 backdrop-blur-xl border-b border-slate-200 py-3 shadow-sm text-slate-800' 
             : 'bg-transparent border-transparent py-6 text-white'
@@ -303,7 +307,7 @@ export default function App() {
               
               <Reveal delay={300}>
                 <p className="text-base sm:text-lg md:text-xl text-slate-400 font-light leading-relaxed max-w-xl mx-auto lg:mx-0 border-l-0 lg:border-l-4 lg:border-blue-500 lg:pl-6">
-                  Para operações que movimentam milhões, o erro manual custa caro. Implementamos a <strong className="text-white font-medium">segurança e inteligência de bancos Tier 1</strong> na sua operação, com a velocidade do Low-Code.
+                  Para operações que movimentam milhões, o erro manual custa caro. Implementamos a <strong className="text-white font-medium">inteligência de bancos Tier 1</strong> na sua operação, com a velocidade do Low-Code.
                 </p>
               </Reveal>
               
@@ -365,7 +369,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 2. SOCIAL PROOF (LOGOS BANCÁRIOS - IMAGENS ATUALIZADAS) */}
+      {/* 2. SOCIAL PROOF (LOGOS BANCÁRIOS - IMAGENS ATUALIZADAS E CORRIGIDAS) */}
       <section className="py-12 md:py-16 border-b border-slate-200 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-8 md:mb-10">
@@ -373,21 +377,21 @@ export default function App() {
              <p className="text-slate-500 text-xs md:text-sm font-light px-4">Onde nossos sócios lideraram projetos críticos que processam <strong className="text-slate-700">R$500 bilhões/ano</strong></p>
           </div>
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-24 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 mb-8 md:mb-16">
-            <BankLogo src="https://lh3.googleusercontent.com/d/1bXUkbivSYCX8TZ69ymv4SUmuWSYdJRGG" alt="Itaú" />
-            <BankLogo src="https://lh3.googleusercontent.com/d/1W8XyBIwJxzdSBxkJfmHy4hxNG03mO6mh" alt="Santander" />
-            <BankLogo src="https://lh3.googleusercontent.com/d/1CfUiS1YSi9d0lps8HDgHiN1IWpZShphW" alt="Bradesco" />
-            <BankLogo src="https://lh3.googleusercontent.com/d/1aj_5IETgqNayEtx0fh42DHVaT-p79-Bk" alt="C6 Bank" />
+            <BankLogo src="https://drive.google.com/thumbnail?id=1bXUkbivSYCX8TZ69ymv4SUmuWSYdJRGG&sz=w1000" alt="Itaú" />
+            <BankLogo src="https://drive.google.com/thumbnail?id=1W8XyBIwJxzdSBxkJfmHy4hxNG03mO6mh&sz=w1000" alt="Santander" />
+            <BankLogo src="https://drive.google.com/thumbnail?id=1CfUiS1YSi9d0lps8HDgHiN1IWpZShphW&sz=w1000" alt="Bradesco" />
+            <BankLogo src="https://drive.google.com/thumbnail?id=1aj_5IETgqNayEtx0fh42DHVaT-p79-Bk&sz=w1000" alt="C6 Bank" />
           </div>
         </div>
       </section>
 
-      {/* 3. RESULTADOS AUDITÁVEIS (NOVA) */}
+      {/* 3. RESULTADOS AUDITÁVEIS */}
       <section className="py-16 md:py-20 bg-slate-50">
          <div className="container mx-auto px-4 md:px-6">
             <Reveal>
                <div className="text-center mb-12 md:mb-16">
                   <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-3 md:mb-4">Resultados Auditáveis</h2>
-                  <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto">Casos reais de otimização operacional e blindagem de margem.</p>
+                  <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto">Casos reais de otimização operacional e maximização de resultados.</p>
                </div>
             </Reveal>
 
@@ -414,7 +418,7 @@ export default function App() {
                         <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wide bg-slate-100 text-slate-500 px-2 py-1 rounded mr-12">Varejo & E-commerce</span>
                      </div>
                      <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-1">R$ 2.4M</div>
-                     <div className="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Recuperação de Margem</div>
+                     <div className="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Expansão de Margem</div>
                      <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">
                         Varejista multicanal (80 SKUs) identificou <strong className="text-emerald-600">8% de perda oculta</strong> em 3 categorias após BI estratégico. Ajustou precificação e mix em 6 meses.
                      </p>
@@ -438,7 +442,7 @@ export default function App() {
          </div>
       </section>
 
-      {/* 4. QUALIFICAÇÃO (PARA QUEM É / NÃO É) */}
+      {/* 4. QUALIFICAÇÃO */}
       <section id="qualificacao" className="py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <Reveal>
@@ -490,7 +494,7 @@ export default function App() {
                       </li>
                       <li className="flex items-start gap-3 md:gap-4">
                          <div className="mt-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-slate-400 shrink-0"></div>
-                         <span className="text-slate-500 text-sm md:text-base leading-relaxed">Equipes menores que 20 pessoas.</span>
+                         <span className="text-slate-500 text-sm md:text-base leading-relaxed">Estruturas muito enxutas ou ainda sem hierarquia definida.</span>
                       </li>
                       <li className="flex items-start gap-3 md:gap-4">
                          <div className="mt-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-slate-400 shrink-0"></div>
@@ -507,7 +511,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 5. SOLUÇÕES (3 PILARES) */}
+      {/* 5. SOLUÇÕES */}
       <section id="solucoes" className="py-16 md:py-20 bg-slate-50">
         <div className="container mx-auto px-4 md:px-6">
           <Reveal>
@@ -520,8 +524,6 @@ export default function App() {
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            
-            {/* Pilar 1: Digitalização */}
             <Reveal delay={100}>
               <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col group">
                 <div className="w-14 h-14 md:w-16 md:h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 md:mb-8 shadow-sm group-hover:bg-blue-600 transition-colors duration-300">
@@ -544,15 +546,12 @@ export default function App() {
               </div>
             </Reveal>
 
-            {/* Pilar 2: Engenharia de Dados (Destaque) */}
             <Reveal delay={200}>
               <div className="bg-[#0B1120] rounded-3xl p-6 md:p-8 border border-slate-700 shadow-2xl hover:shadow-blue-900/20 transition-all duration-300 transform md:scale-105 h-full flex flex-col group relative z-10 ring-2 ring-blue-500/20">
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-[9px] md:text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-20">NOSSO DNA</span>
-                {/* Efeito de fundo movido para um container interno para não cortar o "NOSSO DNA" */}
                 <div className="absolute inset-0 rounded-3xl overflow-hidden z-0 pointer-events-none">
                     <div className="absolute top-0 right-0 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl group-hover:bg-blue-600/20 transition-all"></div>
                 </div>
-                
                 <div className="w-14 h-14 md:w-16 md:h-16 bg-slate-800 rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:bg-white transition-colors duration-300 relative z-10">
                   <Database className="text-white group-hover:text-[#0B1120] transition-colors duration-300 w-6 h-6 md:w-8 md:h-8" />
                 </div>
@@ -573,7 +572,6 @@ export default function App() {
               </div>
             </Reveal>
 
-            {/* Pilar 3: Growth & IA */}
             <Reveal delay={300}>
               <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col group">
                 <div className="w-14 h-14 md:w-16 md:h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 md:mb-8 shadow-sm group-hover:bg-purple-600 transition-colors duration-300">
@@ -595,57 +593,16 @@ export default function App() {
                 </div>
               </div>
             </Reveal>
-
           </div>
         </div>
       </section>
 
-      {/* 6. METODOLOGIA */}
-      <section id="metodologia" className="py-16 md:py-20 bg-white relative overflow-hidden">
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center mb-12 md:mb-16">
-             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Nosso Processo</h2>
-             <p className="text-slate-600 text-base md:text-lg">Liderança executiva, execução técnica.</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-             <div className="flex flex-col items-center text-center p-6 bg-slate-50 md:bg-transparent rounded-2xl md:rounded-none">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl md:text-2xl mb-4 md:mb-6 shadow-sm"><Target size={28}/></div>
-                <h4 className="font-bold text-lg md:text-xl text-slate-900 mb-2">1. Mapeamento</h4>
-                <div className="text-xs font-bold bg-slate-200 text-slate-600 px-2 py-1 rounded mb-3 inline-block">2 Semanas</div>
-                <p className="text-slate-600 text-sm leading-relaxed">Diagnóstico profundo. Entendemos o risco e o financeiro antes de codar.</p>
-             </div>
-             
-             {/* Connector for Desktop */}
-             <div className="hidden md:block absolute top-1/2 left-1/3 w-1/3 h-0.5 bg-slate-100 -z-10 transform -translate-y-12"></div>
-
-             <div className="flex flex-col items-center text-center p-6 bg-slate-50 md:bg-transparent rounded-2xl md:rounded-none">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl md:text-2xl mb-4 md:mb-6 shadow-sm"><Zap size={28}/></div>
-                <h4 className="font-bold text-lg md:text-xl text-slate-900 mb-2">2. Implementação</h4>
-                <div className="text-xs font-bold bg-slate-200 text-slate-600 px-2 py-1 rounded mb-3 inline-block">Sprints Ágeis</div>
-                <p className="text-slate-600 text-sm leading-relaxed">Squads dedicadas. Entregas a cada 15 dias. Você vê o resultado na tela.</p>
-             </div>
-
-             <div className="flex flex-col items-center text-center p-6 bg-slate-50 md:bg-transparent rounded-2xl md:rounded-none">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-bold text-xl md:text-2xl mb-4 md:mb-6 shadow-sm"><LineChart size={28}/></div>
-                <h4 className="font-bold text-lg md:text-xl text-slate-900 mb-2">3. Mensuração</h4>
-                <div className="text-xs font-bold bg-slate-200 text-slate-600 px-2 py-1 rounded mb-3 inline-block">Contínuo</div>
-                <p className="text-slate-600 text-sm leading-relaxed">Dashboard de ROI auditável. Você saberá exatamente quanto economizou.</p>
-             </div>
-          </div>
-          
-          <div className="max-w-md mx-auto mt-10 md:mt-12 bg-slate-50 border border-slate-200 rounded-xl p-4 text-center">
-             <p className="text-xs md:text-sm text-slate-600 font-medium">⏱️ Tempo médio do processo completo: <span className="text-slate-900 font-bold">12 a 20 semanas</span></p>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. QUEM SOMOS (REFATORADA - Layout Horizontal) */}
+      {/* 7. QUEM SOMOS (REFATORADA) */}
       <section id="quem-somos" className="py-16 md:py-20 bg-slate-50 border-t border-slate-200">
         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <Reveal>
             <div className="text-center mb-12 md:mb-16">
-              <span className="text-blue-600 font-bold tracking-wider uppercase text-xs md:text-sm border border-blue-200 bg-white px-4 py-1.5 rounded-full shadow-sm">Quem Constrói Sua Blindagem</span>
+              <span className="text-blue-600 font-bold tracking-wider uppercase text-xs md:text-sm border border-blue-200 bg-white px-4 py-1.5 rounded-full shadow-sm">Quem Lidera Sua Transformação</span>
               <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-slate-900 mt-4 md:mt-6 mb-4 tracking-tight leading-tight">
                 Engenheiros de Bancos Tier 1
               </h2>
@@ -661,23 +618,23 @@ export default function App() {
             {/* Sócio 1: Felipe */}
             <Reveal delay={100}>
               <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-slate-200 hover:border-blue-400 transition-colors shadow-sm flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left h-full">
-                  <div className="w-28 h-28 md:w-32 md:h-32 shrink-0 bg-slate-200 rounded-full overflow-hidden border-4 border-slate-50 shadow-md">
-                      {/* TENTATIVA 1: Link Direto do Google (Formato alternativo) */}
+                  <div className="w-32 h-32 md:w-36 md:h-36 shrink-0 bg-slate-200 rounded-full overflow-hidden border-4 border-slate-50 shadow-md">
+                      {/* URL Segura para Google Drive (thumbnail) */}
                       <SafeAvatar 
-                        src="https://lh3.googleusercontent.com/d/10hDQlBxrz6mwTOg7NjkwDq83kFA2hQzb" 
+                        src="https://drive.google.com/thumbnail?id=10hDQlBxrz6mwTOg7NjkwDq83kFA2hQzb&sz=w1000" 
                         alt="Felipe Belisário" 
                         initials="FB"
                         colorClass="bg-blue-600"
                       />
                   </div>
-                  <div className="flex-grow w-full">
-                     {/* Texto Original Restaurado */}
-                     <div className="flex flex-col xl:flex-row justify-between items-center sm:items-start xl:items-center mb-2 gap-2">
-                        <div className="text-center sm:text-left">
-                           <h3 className="text-xl font-bold text-slate-900">Felipe Belisário</h3>
-                           <p className="text-blue-600 text-sm font-bold">Arquiteto de Soluções & Estratégia</p>
+                  <div className="flex-grow w-full min-w-0">
+                     {/* Header reestruturado para evitar quebra */}
+                     <div className="flex flex-col gap-1 mb-3">
+                        <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-2">
+                           <h3 className="text-xl font-bold text-slate-900 text-center sm:text-left">Felipe Belisário</h3>
+                           <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-1 rounded-full border border-amber-200 flex items-center gap-1 shrink-0 whitespace-nowrap"><Award size={10}/> Prêmio de Inovação Acadêmica</span>
                         </div>
-                        <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-1 rounded-full border border-amber-200 flex items-center gap-1 shrink-0 text-center sm:text-left"><Award size={10}/> Prêmio de Inovação Acadêmica</span>
+                        <p className="text-blue-600 text-sm font-bold text-center sm:text-left">Arquiteto de Soluções & Estratégia</p>
                      </div>
                      
                      <div className="flex gap-2 mb-4 flex-wrap justify-center sm:justify-start">
@@ -705,23 +662,23 @@ export default function App() {
             {/* Sócio 2: Késsia */}
             <Reveal delay={200}>
               <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-slate-200 hover:border-purple-400 transition-colors shadow-sm flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left h-full">
-                  <div className="w-28 h-28 md:w-32 md:h-32 shrink-0 bg-slate-200 rounded-full overflow-hidden border-4 border-slate-50 shadow-md">
-                      {/* TENTATIVA 1: Link Direto do Google (Formato alternativo) */}
+                  <div className="w-32 h-32 md:w-36 md:h-36 shrink-0 bg-slate-200 rounded-full overflow-hidden border-4 border-slate-50 shadow-md">
+                      {/* URL Segura para Google Drive (thumbnail) */}
                       <SafeAvatar 
-                        src="https://lh3.googleusercontent.com/d/1pA1JSUXZ4se7nlJLDPGrDj4CjhzT43Nv" 
+                        src="https://drive.google.com/thumbnail?id=1pA1JSUXZ4se7nlJLDPGrDj4CjhzT43Nv&sz=w1000" 
                         alt="Késsia Natany" 
                         initials="KN"
                         colorClass="bg-purple-600"
                       />
                   </div>
-                  <div className="flex-grow w-full">
-                     {/* Texto Original Restaurado */}
-                     <div className="flex flex-col xl:flex-row justify-between items-center sm:items-start xl:items-center mb-2 gap-2">
-                        <div className="text-center sm:text-left">
-                           <h3 className="text-xl font-bold text-slate-900">Késsia Natany</h3>
-                           <p className="text-purple-600 text-sm font-bold">Data Scientist & Operações</p>
+                  <div className="flex-grow w-full min-w-0">
+                     {/* Header reestruturado para evitar quebra */}
+                     <div className="flex flex-col gap-1 mb-3">
+                        <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-2">
+                           <h3 className="text-xl font-bold text-slate-900 text-center sm:text-left">Késsia Natany</h3>
+                           <span className="bg-purple-100 text-purple-800 text-[10px] font-bold px-2 py-1 rounded-full border border-purple-200 flex items-center gap-1 shrink-0 whitespace-nowrap"><Award size={10}/> Lead Scientist</span>
                         </div>
-                        <span className="bg-purple-100 text-purple-800 text-[10px] font-bold px-2 py-1 rounded-full border border-purple-200 flex items-center gap-1 shrink-0"><Award size={10}/> Lead Scientist</span>
+                        <p className="text-purple-600 text-sm font-bold text-center sm:text-left">Data Scientist & Operações</p>
                      </div>
                      
                      <div className="flex gap-2 mb-4 flex-wrap justify-center sm:justify-start">
@@ -760,7 +717,7 @@ export default function App() {
                   { q: "Preciso migrar toda a operação de uma vez?", a: "Não. Implementamos por etapas (MVP primeiro). Começamos com o processo mais crítico, validamos o resultado e depois escalamos. Sem 'big bang', sem risco operacional." },
                   { q: "Como funciona o modelo de investimento?", a: "Projetos típicos variam de R$80k a R$300k. Trabalhamos com modelo de retainer mensal (PM as a Service) ou projeto fechado. Primeira sprint pode ser um teste pago (R$15k)." },
                   { q: "Vocês atendem empresas fora de São Paulo?", a: "Sim. Atuamos 100% remoto quando necessário, com reuniões estratégicas presenciais mensais. Já atendemos clientes em SP, RJ, MG, PR e SC." },
-                  { q: "O que acontece na Sessão de Diagnóstico?", a: "É uma reunião de 45 minutos com os sócios via Zoom. Você apresenta sua operação, nós fazemos o diagnóstico inicial e entregamos um Mapa de Risco (PDF executivo) com 3-5 oportunidades priorizadas. Sem custo." },
+                  { q: "O que acontece na Sessão de Diagnóstico?", a: "É uma conversa executiva para entendermos o seu cenário. Não vendemos nada nessa reunião. Se houver fit, agendamos uma devolutiva para apresentar um Plano de Ação sob medida." },
                   { q: "E se eu não ficar satisfeito com a primeira sprint?", a: "Se após a primeira entrega (2 semanas) você não enxergar valor, interrompemos sem custo adicional. Você paga apenas pelo trabalho executado até ali. Sem multas, sem burocracias." }
                ].map((item, i) => (
                   <div key={i} className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden">
@@ -784,37 +741,54 @@ export default function App() {
         <div className="container mx-auto px-6 relative z-10 max-w-4xl text-center">
           <Reveal>
             <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
-              Vamos mapear seus riscos <br/> e oportunidades?
+              Sua operação está pronta <br/> para o próximo nível?
             </h2>
-            <p className="text-base md:text-lg text-slate-400 mb-8 md:mb-10 font-light">
-              Agende uma <strong>Sessão de Diagnóstico Estratégico</strong>. Em 45 minutos, desenharemos um mapa de risco da sua operação atual.
+            <p className="text-base md:text-lg text-slate-400 mb-8 md:mb-10 font-light max-w-2xl mx-auto">
+              Não entregamos "orçamentos" genéricos. O primeiro passo é uma <strong>Sessão de Diagnóstico (Discovery Call)</strong> para mergulharmos no seu negócio. Sem compromisso de venda.
             </p>
             
-            <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 max-w-2xl mx-auto mb-10 text-left">
-               <h4 className="text-white font-bold mb-4 border-b border-slate-700 pb-2 text-sm md:text-base">O que você recebe (Grátis):</h4>
-               <ul className="space-y-3 text-slate-300 text-xs md:text-sm">
-                  <li className="flex items-center gap-3">
-                     <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center shrink-0">
-                        <Users size={16} className="text-emerald-500"/>
+            <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 max-w-2xl mx-auto mb-10 text-left relative overflow-hidden group hover:border-blue-500/50 transition-colors">
+               <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Activity size={100} className="text-blue-500"/>
+               </div>
+               
+               <h4 className="text-white font-bold mb-6 border-b border-slate-700 pb-4 text-sm md:text-base flex justify-between items-center">
+                  <span>O QUE ESPERAR DESTA SESSÃO:</span>
+                  <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded border border-emerald-500/30">VAGAS LIMITADAS Q1</span>
+               </h4>
+               
+               <ul className="space-y-5 text-slate-300 text-xs md:text-sm relative z-10">
+                  <li className="flex items-start gap-4">
+                     <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center shrink-0 border border-blue-500/20">
+                        <Users size={20} className="text-blue-400"/>
                      </div>
-                     <span>45 minutos com os sócios (Felipe e Késsia)</span>
+                     <div>
+                        <strong className="text-white block text-sm mb-1">Diagnóstico "Deep Dive"</strong>
+                        <span className="leading-relaxed text-slate-400">45 minutos exclusivos com os sócios (Felipe e Késsia). Vamos mapear gargalos que você nem sabia que existiam.</span>
+                     </div>
                   </li>
-                  <li className="flex items-center gap-3">
-                     <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center shrink-0">
-                        <SearchIcon size={16} className="text-emerald-500"/>
+                  <li className="flex items-start gap-4">
+                     <div className="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center shrink-0 border border-purple-500/20">
+                        <SearchIcon size={20} className="text-purple-400"/>
                      </div>
-                     <span>Diagnóstico de pontos cegos operacionais</span>
+                     <div>
+                        <strong className="text-white block text-sm mb-1">Validação de Fit</strong>
+                        <span className="leading-relaxed text-slate-400">Analisamos se sua maturidade tecnológica atual suporta a aceleração que desenhamos.</span>
+                     </div>
                   </li>
-                  <li className="flex items-center gap-3">
-                     <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center shrink-0">
-                        <FileText size={16} className="text-emerald-500"/>
+                  <li className="flex items-start gap-4">
+                     <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center shrink-0 border border-emerald-500/20">
+                        <FileText size={20} className="text-emerald-400"/>
                      </div>
-                     <span>Mapa de Risco em PDF (3-5 oportunidades priorizadas)</span>
+                     <div>
+                        <strong className="text-white block text-sm mb-1">A "Proposta" vem depois</strong>
+                        <span className="leading-relaxed text-slate-400">Se houver sinergia, agendamos uma <strong>Sessão de Devolutiva</strong> para apresentar o Mapa de Aceleração completo.</span>
+                     </div>
                   </li>
                </ul>
-               <div className="mt-6 pt-4 border-t border-slate-700 flex justify-between items-center text-xs md:text-sm">
-                  <span className="text-slate-400">Investimento:</span>
-                  <span className="text-emerald-400 font-bold">R$ 0 (Para as próximas 5 empresas)</span>
+               <div className="mt-8 pt-4 border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center text-xs md:text-sm gap-2">
+                  <span className="text-slate-400">Valor de mercado desta sessão: <span className="line-through text-slate-600">R$ 2.000</span></span>
+                  <span className="text-emerald-400 font-bold bg-emerald-950/30 px-3 py-1 rounded-full border border-emerald-500/20">Isento para empresas qualificadas</span>
                </div>
             </div>
           </Reveal>
@@ -822,15 +796,15 @@ export default function App() {
           <Reveal delay={200}>
              <button 
                onClick={openWhatsApp}
-               className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white text-lg md:text-xl font-bold py-5 px-12 rounded-xl shadow-[0_0_40px_rgba(37,99,235,0.4)] transition-all hover:scale-[1.01] flex items-center justify-center gap-3 mx-auto active:scale-95"
+               className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white text-lg md:text-xl font-bold py-5 px-12 rounded-xl shadow-[0_0_40px_rgba(37,99,235,0.4)] transition-all hover:scale-[1.01] flex items-center justify-center gap-3 mx-auto active:scale-95 group"
              >
-               Agendar Sessão no WhatsApp
-               <ArrowRight />
+               Aplicar para Diagnóstico
+               <ArrowRight className="group-hover:translate-x-1 transition-transform"/>
              </button>
              <div className="mt-8 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-slate-500 text-[10px] md:text-xs uppercase tracking-wide font-bold">
                 <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-slate-600"/> NDA Assinado</span>
-                <span className="flex items-center gap-2"><Briefcase size={16} className="text-slate-600"/> Sessão com Sócios</span>
-                <span className="flex items-center gap-2"><Clock size={16} className="text-slate-600"/> 48h para agendamento</span>
+                <span className="flex items-center gap-2"><Briefcase size={16} className="text-slate-600"/> Sem Vendedores</span>
+                <span className="flex items-center gap-2"><Clock size={16} className="text-slate-600"/> Agenda Direta</span>
              </div>
           </Reveal>
         </div>
@@ -862,7 +836,7 @@ export default function App() {
                 <li onClick={() => scrollToSection('quem-somos')} className="cursor-pointer hover:text-white transition-colors">Quem Somos</li>
                 <li onClick={() => scrollToSection('solucoes')} className="cursor-pointer hover:text-white transition-colors">Soluções</li>
                 <li onClick={() => scrollToSection('metodologia')} className="cursor-pointer hover:text-white transition-colors">Metodologia</li>
-                <li onClick={openWhatsApp} className="cursor-pointer hover:text-white transition-colors text-blue-500 font-bold">Agendar Blindagem</li>
+                <li onClick={openWhatsApp} className="cursor-pointer hover:text-white transition-colors text-blue-500 font-bold">Agendar Conversa</li>
               </ul>
             </div>
 
