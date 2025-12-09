@@ -623,6 +623,46 @@ export default function App() {
         </div>
       </section>
 
+      {/* 6. METODOLOGIA */}
+      <section id="metodologia" className="py-16 md:py-20 bg-white relative overflow-hidden">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center mb-12 md:mb-16">
+             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Nosso Processo</h2>
+             <p className="text-slate-600 text-base md:text-lg">Liderança executiva, execução técnica.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+             <div className="flex flex-col items-center text-center p-6 bg-slate-50 md:bg-transparent rounded-2xl md:rounded-none">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl md:text-2xl mb-4 md:mb-6 shadow-sm"><Target size={28}/></div>
+                <h4 className="font-bold text-lg md:text-xl text-slate-900 mb-2">1. Mapeamento</h4>
+                <div className="text-xs font-bold bg-slate-200 text-slate-600 px-2 py-1 rounded mb-3 inline-block">2 Semanas</div>
+                <p className="text-slate-600 text-sm leading-relaxed">Diagnóstico profundo. Entendemos o risco e o financeiro antes de codar.</p>
+             </div>
+             
+             {/* Connector for Desktop */}
+             <div className="hidden md:block absolute top-1/2 left-1/3 w-1/3 h-0.5 bg-slate-100 -z-10 transform -translate-y-12"></div>
+
+             <div className="flex flex-col items-center text-center p-6 bg-slate-50 md:bg-transparent rounded-2xl md:rounded-none">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl md:text-2xl mb-4 md:mb-6 shadow-sm"><Zap size={28}/></div>
+                <h4 className="font-bold text-lg md:text-xl text-slate-900 mb-2">2. Implementação</h4>
+                <div className="text-xs font-bold bg-slate-200 text-slate-600 px-2 py-1 rounded mb-3 inline-block">Sprints Ágeis</div>
+                <p className="text-slate-600 text-sm leading-relaxed">Squads dedicadas. Entregas a cada 15 dias. Você vê o resultado na tela.</p>
+             </div>
+
+             <div className="flex flex-col items-center text-center p-6 bg-slate-50 md:bg-transparent rounded-2xl md:rounded-none">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-bold text-xl md:text-2xl mb-4 md:mb-6 shadow-sm"><LineChart size={28}/></div>
+                <h4 className="font-bold text-lg md:text-xl text-slate-900 mb-2">3. Mensuração</h4>
+                <div className="text-xs font-bold bg-slate-200 text-slate-600 px-2 py-1 rounded mb-3 inline-block">Contínuo</div>
+                <p className="text-slate-600 text-sm leading-relaxed">Dashboard de ROI auditável. Você saberá exatamente quanto economizou.</p>
+             </div>
+          </div>
+          
+          <div className="max-w-md mx-auto mt-10 md:mt-12 bg-slate-50 border border-slate-200 rounded-xl p-4 text-center">
+             <p className="text-xs md:text-sm text-slate-600 font-medium">⏱️ Tempo médio do processo completo: <span className="text-slate-900 font-bold">12 a 20 semanas</span></p>
+          </div>
+        </div>
+      </section>
+
       {/* 7. QUEM SOMOS (REFATORADA) */}
       <section id="quem-somos" className="py-16 md:py-20 bg-slate-50 border-t border-slate-200">
         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
