@@ -200,10 +200,8 @@ export default function App() {
 
       {/* HEADER / NAV */}
       <header 
-        className={`fixed w-full z-[70] transition-all duration-500 ${
-          isMenuOpen ? 'top-0' : 'top-[38px]'
-        } ${
-          scrolled || isMenuOpen
+        className={`fixed w-full z-[70] top-[38px] transition-all duration-500 ${
+          scrolled 
             ? 'bg-white/95 backdrop-blur-xl border-b border-slate-200 py-3 shadow-sm text-slate-800' 
             : 'bg-transparent border-transparent py-6 text-white'
         }`} 
@@ -213,10 +211,10 @@ export default function App() {
             className="flex items-center gap-2.5 cursor-pointer"
             onClick={() => scrollToSection('hero')}
           >
-            <div className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-lg transition-colors duration-500 ${scrolled || isMenuOpen ? 'bg-blue-600 shadow-blue-200' : 'bg-white/10 backdrop-blur-md shadow-none ring-1 ring-white/20'}`}>
+            <div className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-lg transition-colors duration-500 ${scrolled ? 'bg-blue-600 shadow-blue-200' : 'bg-white/10 backdrop-blur-md shadow-none ring-1 ring-white/20'}`}>
               <Activity size={20} className="text-white" />
             </div>
-            <span className={`text-xl font-bold tracking-tight transition-colors duration-500 ${scrolled || isMenuOpen ? 'text-slate-900' : 'text-white'}`}>PULSE</span>
+            <span className={`text-xl font-bold tracking-tight transition-colors duration-500 ${scrolled ? 'text-slate-900' : 'text-white'}`}>PULSE</span>
           </div>
           
           <nav className={`hidden md:flex items-center gap-8 text-sm font-medium transition-colors duration-500 ${scrolled ? 'text-slate-600' : 'text-slate-300'}`}>
@@ -250,36 +248,64 @@ export default function App() {
           </div>
 
           <button 
-            className={`md:hidden p-2 ${scrolled || isMenuOpen ? 'text-slate-900' : 'text-white'}`} 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
+            className={`md:hidden p-2 ${scrolled ? 'text-slate-900' : 'text-white'}`} 
+            onClick={() => setIsMenuOpen(true)}
+            aria-label="Open menu"
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            <Menu size={24} />
           </button>
         </div>
-
-        {/* Mobile Menu */}
-        <div className={`fixed inset-0 bg-white z-[65] pt-28 px-6 flex flex-col gap-6 transform transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-            {['Quem Somos', 'Soluções', 'Metodologia', 'Perfil Ideal'].map((item) => {
-               const id = item === 'Perfil Ideal' ? 'qualificacao' : item === 'Quem Somos' ? 'quem-somos' : item.toLowerCase().replace(' ', '-');
-               return (
-                  <button 
-                    key={item}
-                    onClick={() => scrollToSection(id)}
-                    className="text-left text-xl font-medium text-slate-800 hover:text-blue-600 py-4 border-b border-slate-100 flex justify-between items-center"
-                  >
-                    {item} <ArrowRight size={20} className="text-slate-300"/>
-                  </button>
-               )
-            })}
-            <button 
-              onClick={openWhatsApp}
-              className="bg-blue-600 text-white px-4 py-5 rounded-xl text-center font-bold mt-4 shadow-lg shadow-blue-200 text-lg active:scale-95 transition-transform w-full"
-            >
-              Agendar Diagnóstico
-            </button>
-        </div>
       </header>
+
+      {/* NOVO MENU MOBILE INDEPENDENTE (Overlay) */}
+      <div 
+        className={`fixed inset-0 bg-white z-[100] px-6 py-6 flex flex-col gap-8 transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      >
+          <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg">
+                      <Activity size={20} className="text-white" />
+                  </div>
+                  <span className="text-xl font-bold tracking-tight text-slate-900">PULSE</span>
+              </div>
+              <button 
+                onClick={() => setIsMenuOpen(false)}
+                className="p-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+                aria-label="Close menu"
+              >
+                <X size={24} />
+              </button>
+          </div>
+
+          <nav className="flex flex-col gap-2">
+              {['Quem Somos', 'Soluções', 'Metodologia', 'Perfil Ideal'].map((item) => {
+                 const id = item === 'Perfil Ideal' ? 'qualificacao' : item === 'Quem Somos' ? 'quem-somos' : item.toLowerCase().replace(' ', '-');
+                 return (
+                    <button 
+                      key={item}
+                      onClick={() => scrollToSection(id)}
+                      className="text-left text-xl font-medium text-slate-800 hover:text-blue-600 py-4 border-b border-slate-100 flex justify-between items-center group"
+                    >
+                      {item} <ArrowRight size={20} className="text-slate-300 group-hover:text-blue-600 transition-colors"/>
+                    </button>
+                 )
+              })}
+          </nav>
+
+          <div className="mt-auto mb-8">
+            <button 
+              onClick={() => {
+                openWhatsApp();
+                setIsMenuOpen(false);
+              }}
+              className="bg-blue-600 text-white px-4 py-5 rounded-xl text-center font-bold shadow-lg shadow-blue-200 text-lg active:scale-95 transition-transform w-full flex items-center justify-center gap-3"
+            >
+              Agendar Conversa
+              <ArrowRight size={20} />
+            </button>
+            <p className="text-center text-xs text-slate-400 mt-4">Consultoria de Alta Performance</p>
+          </div>
+      </div>
 
       {/* 2. HERO SECTION */}
       <section id="hero" className="bg-[#0f172a] min-h-[90vh] md:min-h-screen flex items-center pt-32 pb-16 md:pt-48 md:pb-32 relative overflow-hidden">
