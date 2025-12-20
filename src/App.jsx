@@ -98,7 +98,7 @@ const SafeAvatar = ({ src, alt, initials, colorClass }) => {
 };
 
 const BankLogo = ({ src, alt }) => (
-  <div className="h-10 md:h-14 w-28 md:w-36 flex items-center justify-center transition-all duration-500 hover:scale-105 opacity-50 hover:opacity-100 grayscale hover:grayscale-0">
+  <div className="h-10 md:h-14 w-28 md:w-36 flex items-center justify-center transition-all duration-500 hover:scale-105 opacity-40 hover:opacity-100 grayscale hover:grayscale-0">
     <img 
       src={src} 
       alt={alt} 
@@ -771,7 +771,7 @@ export default function PulseOS() {
                         <span className="text-xs text-slate-500 uppercase">(A Escala)</span>
                      </div>
                      <div className="md:w-3/4">
-                        <p className="text-sm text-slate-400 mb-2">Expansão para toda a empresa. Criação do Data Lake e Governança completa.</p>
+                        <p className="text-sm text-slate-400 mb-2">Aceleração do Ciclo. Replicamos o método (Mapear &gt; Construir &gt; Auditar) para os demais departamentos (Financeiro, Comercial, Logística). É a fase de Eliminação em Massa do Shadow IT.</p>
                      </div>
                   </div>
                </Reveal>
@@ -785,7 +785,7 @@ export default function PulseOS() {
                         <span className="text-xs text-slate-500 uppercase">(A Governança)</span>
                      </div>
                      <div className="md:w-3/4">
-                        <p className="text-sm text-slate-400">Monitoramento contínuo, IA Preditiva e cadeira no comitê de dados (Fractional CDO).</p>
+                        <p className="text-sm text-slate-400">Governança & Evolução. Não é apenas suporte. Inclui a Evolução dos Apps existentes, Auditoria de Dados mensal e a Calibragem dos modelos de IA (Predict). O Ciclo roda perpetuamente.</p>
                      </div>
                   </div>
                </Reveal>
@@ -1023,55 +1023,14 @@ export default function PulseOS() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-[#020617] border-t border-slate-900 py-16">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-12 text-sm">
-            <div className="col-span-2">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-                   <Activity size={18} className="text-white"/>
-                </div>
-                <span className="text-xl font-bold text-white tracking-tight">PULSE</span>
-              </div>
-              <p className="text-slate-400 leading-relaxed mb-6 max-w-sm">
-                Engenharia de Dados e Governança Corporativa. Transformamos complexidade operacional em eficiência auditável.
-              </p>
-              <div className="flex gap-4">
-                <Linkedin className="text-slate-500 hover:text-white cursor-pointer transition-colors" size={20}/>
-                <Mail className="text-slate-500 hover:text-white cursor-pointer transition-colors" size={20}/>
-              </div>
-            </div>
-            
-            <div>
-               <h4 className="text-white font-bold mb-6">NAVEGAÇÃO</h4>
-               <ul className="space-y-3 text-slate-400">
-                  <li onClick={() => scrollToSection('problema')} className="cursor-pointer hover:text-emerald-400 transition-colors">O Problema</li>
-                  <li onClick={() => scrollToSection('metodologia')} className="cursor-pointer hover:text-emerald-400 transition-colors">Metodologia</li>
-                  <li onClick={() => scrollToSection('cases')} className="cursor-pointer hover:text-emerald-400 transition-colors">Cases</li>
-                  <li onClick={openWhatsApp} className="cursor-pointer text-emerald-400 font-bold hover:text-white transition-colors">Agendar Conversa</li>
-               </ul>
-            </div>
-
-            <div>
-               <h4 className="text-white font-bold mb-6">CONTATO</h4>
-               <ul className="space-y-3 text-slate-400">
-                  <li className="flex items-center gap-2"><Building2 size={14}/> Alphaville, Barueri - SP</li>
-                  <li className="flex items-center gap-2 cursor-pointer hover:text-white transition-colors" onClick={openWhatsApp}><Smartphone size={14}/> (11) 97753-8041</li>
-                  <li className="flex items-center gap-2"><Mail size={14}/> contato@pulse.com.br</li>
-               </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-slate-900 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600">
-            <span>© 2025 Pulse Consultoria. Todos os direitos reservados.</span>
-            <div className="flex gap-6 mt-4 md:mt-0">
-               <span className="hover:text-white cursor-pointer transition-colors">Privacidade</span>
-               <span className="hover:text-white cursor-pointer transition-colors">Termos</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      {/* FOOTER LOGOS */}
+      <div className="py-12 bg-[#020617] border-t border-slate-900 flex justify-center pb-20">
+         <div className="flex gap-8 md:gap-16 opacity-50">
+            <BankLogo src="https://drive.google.com/thumbnail?id=1bXUkbivSYCX8TZ69ymv4SUmuWSYdJRGG&sz=w1000" alt="Itaú" />
+            <BankLogo src="https://drive.google.com/thumbnail?id=1W8XyBIwJxzdSBxkJfmHy4hxNG03mO6mh&sz=w1000" alt="Santander" />
+            <BankLogo src="https://drive.google.com/thumbnail?id=1aj_5IETgqNayEtx0fh42DHVaT-p79-Bk&sz=w1000" alt="C6 Bank" />
+         </div>
+      </div>
     </div>
   );
 }
