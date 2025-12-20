@@ -569,7 +569,7 @@ export default function PulseOS() {
                      </ul>
                      <div className="mt-8 pt-6 border-t border-emerald-500/20">
                         <p className="text-xs text-emerald-400 font-mono uppercase tracking-wide">PERFIL TÍPICO</p>
-                        <p className="text-sm text-slate-300 mt-1">Perfil Típico: R$ 15M a R$ 200M/ano • Times de 20 a 500 pessoas</p>
+                        <p className="text-sm text-slate-300 mt-1">Foco em operações consolidadas com times em expansão.</p>
                      </div>
                   </div>
                </Reveal>
