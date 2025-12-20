@@ -2,14 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   ArrowRight, 
   CheckCircle2, 
-  BarChart3, 
   Zap, 
   Database, 
   TrendingUp, 
   Users, 
   Building2, 
   ChevronDown, 
-  ChevronUp,
   Menu,
   X,
   Linkedin,
@@ -19,27 +17,33 @@ import {
   Smartphone,
   Target,
   LineChart,
-  Layers,
   Lock,
   XCircle,
   Briefcase,
   Award,
-  GraduationCap,
   Clock, 
-  HelpCircle,
   Activity,
-  DollarSign
+  DollarSign,
+  Microscope,
+  Server,
+  Radar,
+  BarChart4,
+  Rocket,
+  Cpu,
+  LayoutGrid,
+  FileSpreadsheet,
+  AlertTriangle,
+  Quote,
+  HelpCircle,
+  ChevronUp,
+  FileText,
+  Search as SearchIcon,
+  Laptop,
+  Tablet,
+  FolderOpen
 } from 'lucide-react';
 
-// --- Componentes Auxiliares ---
-
-const SearchIcon = ({ size, className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-);
-
-const FileText = ({ size, className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-);
+// --- Componentes de UI ---
 
 const Reveal = ({ children, delay = 0 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -72,12 +76,10 @@ const Reveal = ({ children, delay = 0 }) => {
   );
 };
 
-// Componente Avatar Seguro: Tenta carregar a imagem, se falhar mostra as iniciais
 const SafeAvatar = ({ src, alt, initials, colorClass }) => {
   const [imgError, setImgError] = useState(false);
-
   return (
-    <div className="w-full h-full relative">
+    <div className="w-full h-full relative bg-slate-800">
       {!imgError ? (
         <img 
           src={src} 
@@ -87,7 +89,7 @@ const SafeAvatar = ({ src, alt, initials, colorClass }) => {
           referrerPolicy="no-referrer"
         />
       ) : (
-        <div className={`w-full h-full flex items-center justify-center ${colorClass} text-white font-bold text-3xl`}>
+        <div className={`w-full h-full flex items-center justify-center ${colorClass} text-white font-bold text-3xl font-mono`}>
           {initials}
         </div>
       )}
@@ -95,65 +97,79 @@ const SafeAvatar = ({ src, alt, initials, colorClass }) => {
   );
 };
 
-// Componente para Logos dos Bancos (Agora aceita imagem)
-const BankLogo = ({ src, alt }) => {
-  return (
-    <div className="h-12 md:h-16 w-32 md:w-40 flex items-center justify-center transition-transform duration-300 hover:scale-110">
-      <img 
-        src={src} 
-        alt={alt} 
-        className="max-h-full max-w-full object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-        referrerPolicy="no-referrer"
-      />
-    </div>
-  );
-};
+const BankLogo = ({ src, alt }) => (
+  <div className="h-10 md:h-14 w-28 md:w-36 flex items-center justify-center transition-all duration-500 hover:scale-105 opacity-40 hover:opacity-100 grayscale hover:grayscale-0">
+    <img 
+      src={src} 
+      alt={alt} 
+      className="max-h-full max-w-full object-contain brightness-200 hover:brightness-100 transition-all"
+      referrerPolicy="no-referrer"
+    />
+  </div>
+);
+
+// --- Logos Microsoft (SVG Inline) ---
+const LogoPowerApps = () => (
+  <svg viewBox="0 0 32 32" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 2H22C26.4183 2 30 5.58172 30 10V22C30 26.4183 26.4183 30 22 30H10C5.58172 30 2 26.4183 2 22V10C2 5.58172 5.58172 2 10 2Z" fill="url(#paint0_linear)"/>
+    <path d="M10.5 8L21.5 16L10.5 24V8Z" fill="white"/>
+    <defs><linearGradient id="paint0_linear" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse"><stop stopColor="#953C96"/><stop offset="1" stopColor="#E2276E"/></linearGradient></defs>
+  </svg>
+);
+const LogoPowerAutomate = () => (
+  <svg viewBox="0 0 32 32" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M2.5 16L16 2.5L29.5 16L16 29.5L2.5 16Z" fill="#0066FF"/>
+    <path d="M10 16L16 10L22 16L18 16L20 22H12L14 16H10Z" fill="white"/>
+  </svg>
+);
+const LogoPowerBI = () => (
+  <svg viewBox="0 0 32 32" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="6" y="16" width="6" height="12" rx="1" fill="#F2C811"/>
+    <rect x="14" y="10" width="6" height="18" rx="1" fill="#F2C811"/>
+    <rect x="22" y="4" width="6" height="24" rx="1" fill="#F2C811"/>
+  </svg>
+);
+const LogoSharePoint = () => (
+  <svg viewBox="0 0 32 32" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 3C12.134 3 9 6.13401 9 10C9 13.866 12.134 17 16 17C19.866 17 23 13.866 23 10C23 6.13401 19.866 3 16 3Z" fill="#036C70" opacity="0.5"/>
+    <circle cx="16" cy="16" r="13" stroke="#0078D4" strokeWidth="2" fill="none"/>
+    <path d="M16.5 13C13.4624 13 11 15.4624 11 18.5C11 21.5376 13.4624 24 16.5 24C19.5376 24 22 21.5376 22 18.5C22 15.4624 19.5376 13 16.5 13Z" fill="#0078D4"/>
+  </svg>
+);
 
 // --- Componente Principal ---
 
-export default function App() {
+export default function PulseOS() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openFaq, setOpenFaq] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  
-  // Estado para os números dinâmicos
+  const [openFaq, setOpenFaq] = useState(null);
   const [vagas, setVagas] = useState(3);
-  const [fila, setFila] = useState(12);
+  
+  const openWhatsApp = () => window.open('https://wa.me/5511977538041', '_blank');
 
-  // Função para abrir o WhatsApp
-  const openWhatsApp = () => {
-    window.open('https://wa.me/5511977538041', '_blank');
-  };
-
-  // Lógica de "Live Data" simulada
+  // Lógica de Scroll Lock no Menu Mobile
   useEffect(() => {
-    // Define valores iniciais levemente aleatórios ao carregar
-    setVagas(Math.floor(Math.random() * (4 - 2 + 1)) + 2); // Entre 2 e 4
-    setFila(Math.floor(Math.random() * (18 - 10 + 1)) + 10); // Entre 10 e 18
-
-    // Atualiza a "fila" a cada 45 segundos para parecer vivo
-    const interval = setInterval(() => {
-      setFila(prev => {
-        const change = Math.random() > 0.5 ? 1 : -1;
-        return Math.max(8, prev + change); // Nunca menos que 8
-      });
-    }, 45000);
-
-    return () => clearInterval(interval);
-  }, []);
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
 
   useEffect(() => {
+    setVagas(Math.floor(Math.random() * (4 - 2 + 1)) + 2); 
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-      const sections = ['hero', 'qualificacao', 'solucoes', 'metodologia', 'quem-somos', 'faq', 'oferta'];
-      
-      // Encontrar qual seção está visível
+      const sections = ['hero', 'microsoft', 'problema', 'qualificacao', 'metodologia', 'cortex', 'cases', 'faq', 'oferta'];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          if (rect.top >= -200 && rect.top <= 400) {
+          if (rect.top >= -300 && rect.top <= 400) {
             setActiveSection(section);
             break;
           }
@@ -164,227 +180,200 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleFaq = (index) => {
-    setOpenFaq(openFaq === index ? null : index);
-  };
-
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = 100;
-      const y = element.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      const offset = 80;
+      window.scrollTo({ top: element.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
     }
     setIsMenuOpen(false);
     setActiveSection(id);
   };
 
+  const toggleFaq = (index) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
+
   return (
-    <div className="font-sans text-slate-800 bg-slate-50 selection:bg-blue-600 selection:text-white overflow-x-hidden w-full">
+    <div className="font-sans text-slate-300 bg-[#020617] selection:bg-emerald-500/30 selection:text-emerald-200 overflow-x-hidden w-full">
       
-      {/* 1. BARRA DE AVISO (Dinâmica) */}
-      <div className="bg-[#0B1120] text-slate-400 py-3 px-4 text-center text-xs font-medium tracking-wide z-50 fixed w-full top-0 border-b border-slate-800 flex justify-center items-center shadow-md transition-all duration-500">
-        <div className="flex items-center gap-3 cursor-pointer hover:text-white transition-colors group" onClick={openWhatsApp}>
-          <div className="relative">
-            <Activity size={14} className="text-emerald-500"/>
-            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full animate-ping opacity-75"></span>
+      {/* STATUS BAR (Esconde ao rolar para ganhar espaço no mobile) */}
+      <div className={`bg-[#0f172a] border-b border-slate-800 py-2 px-4 text-center z-50 fixed w-full transition-transform duration-300 flex justify-center items-center shadow-lg ${scrolled ? '-translate-y-full' : 'translate-y-0'}`}>
+        <div className="flex items-center gap-3 cursor-pointer hover:bg-slate-800/50 px-3 py-1 rounded-full transition-colors group" onClick={openWhatsApp}>
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+            </span>
+            <span className="text-[10px] font-mono text-slate-400 tracking-widest uppercase">Q1 2025</span>
           </div>
-          <span>
-            Planejamento 2025: <strong className="text-white font-bold">{vagas} vagas para projetos Q1</strong>
-            <span className="hidden sm:inline text-slate-600 mx-2">|</span>
-            <span className="hidden sm:inline text-slate-400">{fila} empresas na fila</span>
+          <span className="text-xs text-slate-200">
+            Abertura para <strong className="text-white border-b border-red-500/50">{vagas} Diagnósticos</strong> de Recuperação de Margem.
           </span>
           <ArrowRight size={12} className="text-emerald-500 group-hover:translate-x-1 transition-transform"/>
         </div>
       </div>
 
-      {/* HEADER / NAV */}
-      <header 
-        className={`fixed w-full z-[70] top-[38px] transition-all duration-500 ${
-          scrolled 
-            ? 'bg-white/95 backdrop-blur-xl border-b border-slate-200 py-3 shadow-sm text-slate-800' 
-            : 'bg-transparent border-transparent py-6 text-white'
-        }`} 
-      >
+      {/* NAVBAR (Ajusta posição ao rolar) */}
+      <header className={`fixed w-full z-[49] transition-all duration-300 ${scrolled ? 'top-0 bg-[#020617]/90 backdrop-blur-lg border-b border-slate-800/50 py-3' : 'top-[40px] bg-transparent border-transparent py-5'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <div 
-            className="flex items-center gap-2.5 cursor-pointer"
-            onClick={() => scrollToSection('hero')}
-          >
-            <div className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-lg transition-colors duration-500 ${scrolled ? 'bg-blue-600 shadow-blue-200' : 'bg-white/10 backdrop-blur-md shadow-none ring-1 ring-white/20'}`}>
-              <Activity size={20} className="text-white" />
+          <div className="flex items-center gap-3 cursor-pointer group" onClick={() => scrollToSection('hero')}>
+            <div className="relative">
+                <div className="absolute -inset-1 bg-blue-500 rounded-lg opacity-20 blur group-hover:opacity-40 transition-opacity"></div>
+                <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center relative">
+                    <Activity size={20} className="text-blue-400" />
+                </div>
             </div>
-            <span className={`text-xl font-bold tracking-tight transition-colors duration-500 ${scrolled ? 'text-slate-900' : 'text-white'}`}>PULSE</span>
+            <div className="flex flex-col">
+              <span className="text-lg font-bold tracking-tight text-white leading-none">PULSE</span>
+              <span className="text-[9px] font-mono text-slate-500 tracking-[0.2em] group-hover:text-blue-400 transition-colors">OS.2025</span>
+            </div>
           </div>
           
-          <nav className={`hidden md:flex items-center gap-8 text-sm font-medium transition-colors duration-500 ${scrolled ? 'text-slate-600' : 'text-slate-300'}`}>
-            {['Quem Somos', 'Soluções', 'Metodologia', 'Perfil Ideal'].map((item) => {
-              const id = item === 'Perfil Ideal' ? 'qualificacao' : item === 'Quem Somos' ? 'quem-somos' : item.toLowerCase().replace(' ', '-');
+          <nav className="hidden md:flex items-center gap-1 bg-slate-900/50 p-1 rounded-full border border-slate-800/50 backdrop-blur-md">
+            {['A Ferramenta', 'O Problema', 'Para Quem É', 'Resultados'].map((item) => {
+              const id = item === 'A Ferramenta' ? 'microsoft' : item === 'O Problema' ? 'problema' : item === 'Para Quem É' ? 'qualificacao' : 'cases';
               const isActive = activeSection === id;
               return (
-                <button 
-                  key={item}
-                  onClick={() => scrollToSection(id)} 
-                  className={`relative group py-2 transition-colors ${isActive && scrolled ? 'text-blue-600 font-semibold' : isActive ? 'text-white font-semibold' : scrolled ? 'hover:text-blue-500' : 'hover:text-white'}`}
-                >
+                <button key={item} onClick={() => scrollToSection(id)} className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${isActive ? 'bg-slate-800 text-white shadow-sm border border-slate-700' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}>
                   {item}
-                  <span className={`absolute bottom-0 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
                 </button>
               );
             })}
           </nav>
 
           <div className="hidden md:flex items-center gap-4">
-             <button 
-              onClick={openWhatsApp}
-              className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 border ${
-                scrolled 
-                  ? 'bg-blue-600 text-white hover:bg-blue-700 border-transparent' 
-                  : 'bg-white text-slate-900 hover:bg-slate-100 border-transparent'
-              }`}
-            >
-              Diagnóstico Estratégico
+             <button onClick={openWhatsApp} className="group relative px-6 py-2.5 rounded-lg bg-emerald-500 text-[#020617] font-bold text-xs uppercase tracking-wide overflow-hidden hover:scale-105 transition-transform shadow-lg shadow-emerald-500/20">
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+              <span className="relative">Diagnóstico Gratuito</span>
             </button>
           </div>
 
-          <button 
-            className={`md:hidden p-2 ${scrolled ? 'text-slate-900' : 'text-white'}`} 
-            onClick={() => setIsMenuOpen(true)}
-            aria-label="Open menu"
-          >
+          <button className="md:hidden text-white p-2" onClick={() => setIsMenuOpen(true)}>
             <Menu size={24} />
           </button>
         </div>
       </header>
 
-      {/* NOVO MENU MOBILE INDEPENDENTE (Overlay) */}
-      <div 
-        className={`fixed inset-0 bg-white z-[100] px-6 py-6 flex flex-col gap-8 transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
-      >
-          <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg">
-                      <Activity size={20} className="text-white" />
-                  </div>
-                  <span className="text-xl font-bold tracking-tight text-slate-900">PULSE</span>
-              </div>
-              <button 
-                onClick={() => setIsMenuOpen(false)}
-                className="p-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
-                aria-label="Close menu"
-              >
-                <X size={24} />
-              </button>
+      {/* MOBILE MENU (Full Overlay com trava de scroll) */}
+      <div className={`fixed inset-0 bg-[#020617] z-[100] p-6 flex flex-col gap-8 transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="flex justify-between items-center border-b border-slate-800 pb-4">
+              <span className="text-xl font-bold text-white">MENU</span>
+              <button onClick={() => setIsMenuOpen(false)} className="text-slate-400 hover:text-white p-2"><X size={24} /></button>
           </div>
-
           <nav className="flex flex-col gap-2">
-              {['Quem Somos', 'Soluções', 'Metodologia', 'Perfil Ideal'].map((item) => {
-                 const id = item === 'Perfil Ideal' ? 'qualificacao' : item === 'Quem Somos' ? 'quem-somos' : item.toLowerCase().replace(' ', '-');
+              {['A Ferramenta', 'O Problema', 'Para Quem É', 'Resultados'].map((item) => {
+                 const id = item === 'A Ferramenta' ? 'microsoft' : item === 'O Problema' ? 'problema' : item === 'Para Quem É' ? 'qualificacao' : 'cases';
                  return (
-                    <button 
-                      key={item}
-                      onClick={() => scrollToSection(id)}
-                      className="text-left text-xl font-medium text-slate-800 hover:text-blue-600 py-4 border-b border-slate-100 flex justify-between items-center group"
-                    >
-                      {item} <ArrowRight size={20} className="text-slate-300 group-hover:text-blue-600 transition-colors"/>
+                    <button key={item} onClick={() => scrollToSection(id)} className="text-left text-2xl font-light text-slate-300 hover:text-emerald-400 py-4 border-b border-slate-800/50 flex justify-between items-center active:bg-slate-900">
+                      {item} <ArrowRight size={16} className="text-slate-600"/>
                     </button>
                  )
               })}
           </nav>
-
-          <div className="mt-auto mb-8">
-            <button 
-              onClick={() => {
-                openWhatsApp();
-                setIsMenuOpen(false);
-              }}
-              className="bg-blue-600 text-white px-4 py-5 rounded-xl text-center font-bold shadow-lg shadow-blue-200 text-lg active:scale-95 transition-transform w-full flex items-center justify-center gap-3"
-            >
-              Agendar Conversa
-              <ArrowRight size={20} />
-            </button>
-            <p className="text-center text-xs text-slate-400 mt-4">Consultoria de Alta Performance</p>
-          </div>
+          <button onClick={() => { openWhatsApp(); setIsMenuOpen(false); }} className="mt-auto w-full bg-emerald-500 text-[#020617] py-4 rounded-xl font-bold uppercase tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/20">
+            Agendar Diagnóstico <ArrowRight size={18}/>
+          </button>
       </div>
 
-      {/* 2. HERO SECTION */}
-      <section id="hero" className="bg-[#0f172a] min-h-[90vh] md:min-h-screen flex items-center pt-32 pb-16 md:pt-48 md:pb-32 relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0 bg-slate-900 opacity-90"></div>
-        {/* Abstract shapes simulation */}
-        <div className="absolute top-[-20%] right-[-10%] w-[300px] md:w-[800px] h-[300px] md:h-[800px] bg-blue-600/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none animate-pulse"></div>
+      {/* 1. HERO SECTION */}
+      <section id="hero" className="relative min-h-screen flex flex-col justify-center pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-[#020617] to-[#020617]"></div>
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-soft-light"></div>
         
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+        <div className="container mx-auto px-4 md:px-6 relative z-10 flex-grow flex items-center">
+          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 w-full">
             
-            <div className="lg:w-1/2 space-y-6 md:space-y-8 text-center lg:text-left">
+            <div className="lg:w-1/2 space-y-8 text-center lg:text-left">
               <Reveal delay={100}>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-1.5 rounded-full bg-blue-900/30 border border-blue-500/30 backdrop-blur-md text-blue-300 text-[10px] md:text-xs font-bold tracking-wide uppercase mb-2 hover:bg-blue-900/50 transition-colors cursor-default shadow-sm">
-                  <Activity size={12} className="text-blue-400 md:w-3.5 md:h-3.5"/>
-                  Consultoria de Operações "Bank-Grade"
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-slate-900 border border-slate-700 text-blue-400 text-[10px] font-mono tracking-widest uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+                  Auditoria & Engenharia Operacional
                 </div>
               </Reveal>
 
               <Reveal delay={200}>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight md:leading-[1.1] tracking-tight">
-                  Sua empresa atingiu um novo patamar, mas a gestão <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 block mt-1 md:mt-0 md:inline">continua em planilhas?</span>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
+                  Sua empresa cresceu, mas os números ainda fecham no <span className="text-emerald-400 underline decoration-emerald-500/30 underline-offset-8">Excel</span>?
                 </h1>
               </Reveal>
               
               <Reveal delay={300}>
-                <p className="text-base sm:text-lg md:text-xl text-slate-400 font-light leading-relaxed max-w-xl mx-auto lg:mx-0 border-l-0 lg:border-l-4 lg:border-blue-500 lg:pl-6">
-                  Para operações que movimentam milhões, o erro manual custa caro. Implementamos a <strong className="text-white font-medium">inteligência de bancos Tier 1</strong> na sua operação, com a velocidade do Low-Code.
+                <p className="text-lg text-slate-400 font-light leading-relaxed max-w-xl mx-auto lg:mx-0 border-l-2 border-emerald-500/50 pl-6">
+                  Implementamos o <strong>Pulse O.S.</strong>: O sistema operacional que elimina o caos, blinda seus dados e usa IA para prever sua margem futura.
+                </p>
+                <p className="text-sm text-slate-500 mt-4 max-w-lg mx-auto lg:mx-0">
+                  Para empresas em expansão que buscam a segurança e governança de um banco para superar os limites do Excel.
                 </p>
               </Reveal>
               
               <Reveal delay={400}>
-                <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-4 md:pt-6 justify-center lg:justify-start w-full md:w-auto">
-                  <button 
-                    onClick={openWhatsApp}
-                    className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white text-base md:text-lg px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] hover:-translate-y-1 flex items-center justify-center gap-2 group active:scale-95"
-                  >
-                    Agendar Diagnóstico Estratégico <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform"/>
-                  </button>
-                  <button 
-                    onClick={() => scrollToSection('qualificacao')}
-                    className="w-full sm:w-auto group bg-transparent border border-slate-600 hover:border-slate-400 text-white text-base md:text-lg px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-medium transition-all backdrop-blur-sm flex items-center justify-center gap-2 active:bg-white/5"
-                  >
-                    A Pulse é para mim? <ChevronDown size={18} className="group-hover:translate-y-1 transition-transform text-slate-400"/>
+                <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center lg:justify-start">
+                  <button onClick={openWhatsApp} className="relative group bg-emerald-500 hover:bg-emerald-400 text-[#020617] px-8 py-4 rounded-xl font-bold transition-all hover:-translate-y-1 flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(16,185,129,0.2)]">
+                    SOLICITAR DIAGNÓSTICO ESTRATÉGICO (GRATUITO)
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform"/>
                   </button>
                 </div>
               </Reveal>
             </div>
             
-            {/* Visual Abstract - Bank Grade */}
-            <div className="hidden lg:block lg:w-1/2 w-full perspective-[2000px]">
+            {/* Right Visual: The "System" + Mobile Card */}
+            <div className="lg:w-1/2 w-full perspective-[2000px]">
               <Reveal delay={300}>
-                 <div className="relative w-full aspect-square flex items-center justify-center scale-90 lg:scale-100">
+                 <div className="relative group transform transition-transform duration-700 hover:scale-[1.01]">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
                     
-                    {/* Orbit Rings (Efeito 3D simulado) */}
-                    <div className="absolute w-[350px] h-[350px] lg:w-[400px] lg:h-[400px] border border-blue-500/10 rounded-full animate-spin [animation-duration:40s]"></div>
-                    <div className="absolute w-[450px] h-[450px] lg:w-[500px] lg:h-[500px] border border-blue-500/5 rounded-full animate-spin [animation-duration:60s] direction-reverse"></div>
-                    <div className="absolute w-[550px] h-[550px] lg:w-[600px] lg:h-[600px] border border-slate-700/20 rounded-full animate-spin [animation-duration:80s]"></div>
-
-                    {/* Central Core */}
-                    <div className="relative bg-[#0F172A]/80 p-8 lg:p-10 rounded-[2rem] border border-blue-500/30 backdrop-blur-xl shadow-2xl z-20 text-center w-80 lg:w-96 transform hover:scale-105 transition-transform duration-500">
-                       <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-600/30">
-                          <Lock className="text-white" size={32} />
+                    {/* MOBILE VISUAL (Simplified Dashboard - Visible only on mobile) */}
+                    <div className="lg:hidden bg-slate-900 border border-slate-700 p-5 rounded-xl relative overflow-hidden shadow-xl mb-8">
+                       <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
+                       <div className="flex items-center justify-between mb-4">
+                          <span className="text-[10px] font-mono text-slate-500 tracking-widest">PULSE_MOBILE_VIEW</span>
+                          <div className="flex gap-1"><div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div></div>
                        </div>
-                       <h3 className="text-xl lg:text-2xl font-bold text-white mb-2">Padrão Bancário</h3>
-                       <p className="text-slate-400 text-xs lg:text-sm leading-relaxed">Governança, Auditoria e Segurança Enterprise aplicados ao seu negócio.</p>
-                       
-                       {/* Floating Stats */}
-                       <div className="absolute -right-12 -top-6 lg:-right-16 bg-slate-800/90 p-3 lg:p-4 rounded-xl border border-slate-600 backdrop-blur-md shadow-xl animate-bounce">
-                          <div className="flex items-center gap-3 mb-1">
-                             <TrendingUp size={18} className="text-emerald-400"/>
-                             <span className="text-xs lg:text-sm font-bold text-white">Margem +18%</span>
+                       <div className="flex justify-between items-end mb-4">
+                          <div>
+                             <div className="text-xs text-slate-400 mb-1">Risco Detectado</div>
+                             <div className="text-xl font-bold text-white">Ruptura de Estoque</div>
+                          </div>
+                          <div className="text-right">
+                              <div className="text-xs text-slate-500">SKU-9021</div>
+                              <div className="text-emerald-400 font-bold text-sm">Ação Requerida</div>
                           </div>
                        </div>
+                       <div className="mt-2 text-xs text-emerald-400 font-mono bg-emerald-500/10 p-3 rounded border border-emerald-500/20 flex items-center gap-2">
+                          <Zap size={14} />
+                          <span>Sugestão: Compra Automática (500un)</span>
+                       </div>
+                    </div>
 
-                       <div className="absolute -left-10 bottom-8 lg:-left-12 bg-slate-800/90 p-3 lg:p-4 rounded-xl border border-slate-600 backdrop-blur-md shadow-xl animate-bounce" style={{animationDelay: '1.5s'}}>
-                          <div className="flex items-center gap-3">
-                             <ShieldCheck size={18} className="text-blue-400"/>
-                             <span className="text-xs lg:text-sm font-bold text-white">Compliance 100%</span>
+                    {/* DESKTOP VISUAL (Full Dashboard - Hidden on mobile) */}
+                    <div className="hidden lg:block relative bg-[#0B1120] border border-slate-700 w-full max-w-md rounded-2xl overflow-hidden shadow-2xl mx-auto">
+                       <div className="bg-slate-900 px-4 py-3 border-b border-slate-800 flex justify-between items-center backdrop-blur-sm">
+                          <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div><div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div><div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div></div>
+                          <span className="text-[10px] font-mono text-slate-500 tracking-widest">PULSE_CORTEX_LIVE_VIEW</span>
+                       </div>
+                       
+                       <div className="p-6 grid gap-6">
+                          <div className="grid grid-cols-2 gap-4">
+                             <div className="bg-slate-800/30 p-4 rounded-lg border border-slate-700/50">
+                                <div className="flex justify-between items-start mb-2"><span className="text-[10px] text-slate-400 uppercase tracking-wider">Margem Real</span><TrendingUp size={14} className="text-emerald-500"/></div>
+                                <div className="text-2xl font-bold text-white">+18.2%</div>
+                                <span className="text-[10px] text-emerald-500 font-mono">+2.4% vs last month</span>
+                             </div>
+                             <div className="bg-slate-800/30 p-4 rounded-lg border border-slate-700/50">
+                                <div className="flex justify-between items-start mb-2"><span className="text-[10px] text-slate-400 uppercase tracking-wider">Risco PDD</span><ShieldCheck size={14} className="text-blue-500"/></div>
+                                <div className="text-2xl font-bold text-white">0.8%</div>
+                                <span className="text-[10px] text-blue-500 font-mono">Blindagem Ativa</span>
+                             </div>
+                          </div>
+                          
+                          <div className="bg-slate-950 rounded-lg p-4 border border-slate-800 font-mono text-[10px] leading-relaxed relative overflow-hidden">
+                             <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
+                             <div className="space-y-2 opacity-80">
+                                <div className="flex gap-2"><span className="text-slate-500">10:42:01</span><span className="text-emerald-400">[AUDIT]</span><span className="text-slate-300">Excel 'Precificação_V2.xlsx' replaced.</span></div>
+                                <div className="flex gap-2"><span className="text-slate-500">10:42:05</span><span className="text-blue-400">[BOT]</span><span className="text-slate-300">Stock rupture alert sent.</span></div>
+                                <div className="flex gap-2"><span className="text-slate-500">10:42:12</span><span className="text-purple-400">[AI]</span><span className="text-slate-300">Churn risk detected: Client #9021 (85%).</span></div>
+                             </div>
                           </div>
                        </div>
                     </div>
@@ -393,537 +382,582 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
 
-      {/* 2. SOCIAL PROOF (LOGOS BANCÁRIOS - IMAGENS ATUALIZADAS E CORRIGIDAS) */}
-      <section className="py-12 md:py-16 border-b border-slate-200 bg-white">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-8 md:mb-10">
-             <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-2 px-4">DNA formado nas maiores instituições financeiras do país</p>
-             <p className="text-slate-500 text-xs md:text-sm font-light px-4">Onde nossos sócios lideraram projetos críticos que processam <strong className="text-slate-700">R$500 bilhões/ano</strong></p>
-          </div>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-24 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 mb-8 md:mb-16">
-            <BankLogo src="https://drive.google.com/thumbnail?id=1bXUkbivSYCX8TZ69ymv4SUmuWSYdJRGG&sz=w1000" alt="Itaú" />
-            <BankLogo src="https://drive.google.com/thumbnail?id=1W8XyBIwJxzdSBxkJfmHy4hxNG03mO6mh&sz=w1000" alt="Santander" />
-            <BankLogo src="https://drive.google.com/thumbnail?id=1CfUiS1YSi9d0lps8HDgHiN1IWpZShphW&sz=w1000" alt="Bradesco" />
-            <BankLogo src="https://drive.google.com/thumbnail?id=1aj_5IETgqNayEtx0fh42DHVaT-p79-Bk&sz=w1000" alt="C6 Bank" />
-          </div>
+        {/* BANK LOGOS STRIP */}
+        <div className="w-full border-t border-slate-800 bg-[#050b1d] mt-20 py-8">
+           <div className="container mx-auto px-6">
+              <p className="text-center text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-6 font-mono">DNA formado em instituições que processam R$500Bi/ano</p>
+              <div className="flex flex-wrap justify-center gap-12 md:gap-24 opacity-60">
+                 <BankLogo src="https://drive.google.com/thumbnail?id=1bXUkbivSYCX8TZ69ymv4SUmuWSYdJRGG&sz=w1000" alt="Itaú" />
+                 <BankLogo src="https://drive.google.com/thumbnail?id=1W8XyBIwJxzdSBxkJfmHy4hxNG03mO6mh&sz=w1000" alt="Santander" />
+                 <BankLogo src="https://drive.google.com/thumbnail?id=1CfUiS1YSi9d0lps8HDgHiN1IWpZShphW&sz=w1000" alt="Bradesco" />
+                 <BankLogo src="https://drive.google.com/thumbnail?id=1aj_5IETgqNayEtx0fh42DHVaT-p79-Bk&sz=w1000" alt="C6 Bank" />
+              </div>
+           </div>
         </div>
       </section>
 
-      {/* 3. RESULTADOS AUDITÁVEIS */}
-      <section className="py-16 md:py-20 bg-slate-50">
-         <div className="container mx-auto px-4 md:px-6">
+      {/* 2. MICROSOFT LEVERAGE */}
+      <section id="microsoft" className="py-16 md:py-24 bg-[#0B1120] border-t border-slate-800 relative">
+         <div className="container mx-auto px-6 relative z-10">
             <Reveal>
-               <div className="text-center mb-12 md:mb-16">
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-3 md:mb-4">Resultados Auditáveis</h2>
-                  <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto">Casos reais de otimização operacional e maximização de resultados.</p>
+               <div className="text-center max-w-3xl mx-auto mb-16">
+                  <span className="text-blue-500 font-mono text-xs uppercase tracking-widest border border-blue-500/20 px-3 py-1 rounded bg-blue-500/5">Ecossistema Microsoft 365</span>
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mt-6 mb-4">
+                     Você já paga por uma Ferrari.<br/>
+                     <span className="text-slate-500">Mas ainda está andando de bicicleta.</span>
+                  </h2>
+                  <p className="text-slate-400 leading-relaxed text-sm md:text-base">
+                     Sua licença Microsoft 365 já inclui as ferramentas de automação mais poderosas do mundo. A Pulse desbloqueia esse potencial para criar um ecossistema integrado <strong>sem custo extra de software</strong>.
+                  </p>
+                  
+                  {/* CREDIBILIDADE GARTNER */}
+                  <div className="mt-8 bg-slate-900/50 border border-slate-800 rounded-xl p-6 flex flex-col md:flex-row gap-4 items-center text-left hover:border-emerald-500/30 transition-colors">
+                     <div className="bg-emerald-500/10 p-3 rounded-full shrink-0">
+                        <Quote size={20} className="text-emerald-400" />
+                     </div>
+                     <div>
+                        <p className="text-sm text-slate-300 italic mb-2">
+                           "Até 2025, <strong>70% das novas aplicações</strong> desenvolvidas pelas empresas utilizarão tecnologias low-code ou no-code."
+                        </p>
+                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">— Gartner Research</span>
+                     </div>
+                  </div>
                </div>
             </Reveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
-               <Reveal delay={100}>
-                  <div className="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
-                     <div className="flex justify-between items-start mb-6">
-                        <div className="p-3 bg-blue-50 rounded-xl"><Clock size={20} className="text-blue-600 md:w-6 md:h-6"/></div>
-                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wide bg-slate-100 text-slate-500 px-2 py-1 rounded">Varejo & Distribuição</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+               {[
+                  { logo: <LogoPowerApps/>, title: "Power Apps", sub: "Web & Mobile", desc: "Apps Corporativos seguros. Funciona no Tablet, Celular e Web. Ideal para equipes de campo e escritório.", examples: "Vendas em campo, Checklist de Loja, Manutenção.", border: "hover:border-purple-500/50", deviceIcons: true },
+                  { logo: <LogoPowerAutomate/>, title: "Power Automate", sub: "Eficiência", desc: "Robôs 24/7. Automação de aprovações e processos repetitivos sem intervenção humana.", examples: "Aprovação de Compra, Onboarding de Cliente.", border: "hover:border-blue-500/50" },
+                  { logo: <LogoSharePoint/>, title: "SharePoint & Dataverse", sub: "Segurança & Dados", desc: "Gestão Documental Inteligente e Banco de Dados auditável com controle de acesso rigoroso.", examples: "Gestão de Contratos, Intranet, CRM Customizado.", border: "hover:border-emerald-500/50" },
+                  { logo: <LogoPowerBI/>, title: "Power BI", sub: "Visão", desc: "Dashboards financeiros que leem a operação em tempo real. Tome decisões baseadas em dados.", examples: "DRE em Tempo Real, Fluxo de Caixa, Churn Rate.", border: "hover:border-yellow-500/50" }
+               ].map((item, i) => (
+                  <Reveal key={i} delay={i * 100}>
+                     <div className={`h-full p-6 rounded-2xl bg-slate-900 border border-slate-800 ${item.border} transition-all hover:-translate-y-1 group relative overflow-hidden flex flex-col`}>
+                        <div className="flex justify-between items-start mb-6">
+                           <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-white/5 p-2 border border-white/10">
+                              {item.logo}
+                           </div>
+                           {item.deviceIcons && (
+                              <div className="flex gap-1 text-slate-500">
+                                 <Smartphone size={16}/>
+                                 <Tablet size={16}/>
+                                 <Laptop size={16}/>
+                              </div>
+                           )}
+                        </div>
+                        <h3 className="font-bold text-lg text-white mb-1">{item.title}</h3>
+                        <span className="text-xs font-mono text-slate-500 uppercase tracking-widest mb-4 block">{item.sub}</span>
+                        <p className="text-sm text-slate-300 leading-relaxed mb-4 flex-grow">{item.desc}</p>
+                        
+                        <div className="mt-auto pt-4 border-t border-slate-800/50">
+                           <p className="text-[10px] text-slate-500 font-mono uppercase mb-1">Exemplos:</p>
+                           <p className="text-xs text-slate-400 italic">{item.examples}</p>
+                        </div>
                      </div>
-                     <div className="text-3xl md:text-4xl font-bold text-blue-600 mb-1">120h/mês</div>
-                     <div className="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Redução de Retrabalho</div>
-                     <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">
-                        Distribuidora regional controlava estoque em <strong className="text-blue-600">15 planilhas</strong>. Unificamos em aplicativo auditável. Equipe deixou de recompilar dados e passou a analisar tendências.
+                  </Reveal>
+               ))}
+            </div>
+
+            {/* ROI CALCULATOR CARD */}
+            <Reveal delay={400}>
+               <div className="mt-12 bg-slate-900 border border-emerald-500/30 rounded-2xl p-8 relative overflow-hidden max-w-4xl mx-auto">
+                  <div className="absolute top-0 right-0 p-4 opacity-10"><DollarSign size={100} className="text-emerald-500"/></div>
+                  <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+                     <div className="md:w-1/2">
+                        <h3 className="text-xl font-bold text-white mb-2">💰 Quanto você já está pagando (e não usa)?</h3>
+                        <p className="text-sm text-slate-400 mb-4">Exemplo: 100 licenças Microsoft E3 = ~R$ 144k/ano.</p>
+                        <ul className="space-y-2 text-xs text-slate-300 font-mono">
+                           <li className="flex justify-between border-b border-slate-800 pb-1"><span>Power Apps (Valor Mercado)</span> <span className="text-slate-500">~R$ 80k/app</span></li>
+                           <li className="flex justify-between border-b border-slate-800 pb-1"><span>Power Automate (RPA)</span> <span className="text-slate-500">~R$ 15k/bot</span></li>
+                           <li className="flex justify-between border-b border-slate-800 pb-1"><span>SharePoint (GED)</span> <span className="text-slate-500">~R$ 30k/ano</span></li>
+                        </ul>
+                     </div>
+                     <div className="md:w-1/2 bg-[#020617] p-6 rounded-xl border border-slate-800 text-center">
+                        <p className="text-xs text-slate-500 uppercase mb-2">Total desperdiçado em potencial</p>
+                        <div className="text-3xl font-bold text-red-400 mb-4">~R$ 185.000 / ano</div>
+                        <p className="text-xs text-emerald-400">A Pulse desbloqueia esse valor com um investimento único.</p>
+                     </div>
+                  </div>
+               </div>
+            </Reveal>
+         </div>
+      </section>
+
+      {/* 3. O PROBLEMA */}
+      <section id="problema" className="py-16 md:py-24 bg-[#020617] border-t border-slate-800">
+         <div className="container mx-auto px-6">
+            <div className="grid md:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+               <Reveal>
+                  <div className="pr-4">
+                     <div className="flex items-center gap-2 mb-6">
+                        <AlertTriangle className="text-red-500" size={20}/>
+                        <span className="text-red-500 font-mono text-xs uppercase tracking-widest">Alerta Financeiro</span>
+                     </div>
+                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">O Custo Invisível do Caos</h2>
+                     <p className="text-lg text-slate-400 leading-relaxed mb-8">
+                        Se o seu Comercial e o Financeiro apresentam números diferentes na reunião de diretoria, você não tem gestão. <span className="text-white font-medium border-b border-red-500/50">Você tem torcida.</span>
                      </p>
+                     
+                     {/* MCKINSEY STAT */}
+                     <div className="mb-8 bg-slate-900/50 p-4 rounded-lg border-l-4 border-blue-500">
+                        <p className="text-sm text-slate-300 italic">"Empresas perdem em média <strong>11,4% de margem</strong> por ineficiências operacionais e falta de visibilidade."</p>
+                        <p className="text-xs text-slate-500 mt-2 text-right">— McKinsey & Co. (Operações Latam)</p>
+                     </div>
+
+                     <div className="space-y-4">
+                        <div className="p-4 rounded-xl bg-red-500/5 border border-red-500/10 flex gap-4">
+                           <div className="mt-1"><XCircle className="text-red-500" size={20} /></div>
+                           <div>
+                              <h4 className="text-white font-bold mb-1 text-sm">A Margem Fantasma</h4>
+                              <p className="text-xs text-slate-400">Ineficiências que o ERP não pega e o Excel esconde.</p>
+                           </div>
+                        </div>
+                     </div>
                   </div>
                </Reveal>
-
+               
                <Reveal delay={200}>
-                  <div className="bg-white p-6 md:p-8 rounded-2xl border border-emerald-100 shadow-lg transition-all duration-300 transform md:scale-105 md:shadow-2xl relative z-10 h-full flex flex-col">
-                     <span className="absolute top-4 right-4 bg-emerald-500 text-white text-[9px] md:text-[10px] font-bold px-2 py-1 rounded-full shadow-md">MAIS COMUM</span>
-                     <div className="flex justify-between items-start mb-6">
-                        <div className="p-3 bg-emerald-50 rounded-xl"><DollarSign size={20} className="text-emerald-600 md:w-6 md:h-6"/></div>
-                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wide bg-slate-100 text-slate-500 px-2 py-1 rounded mr-12">Varejo & E-commerce</span>
+                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-1 relative">
+                     <div className="absolute inset-0 bg-red-500/10 blur-xl"></div>
+                     <div className="bg-[#020617] rounded-xl p-8 relative z-10 flex flex-col items-center justify-center text-center min-h-[350px]">
+                        <div className="w-20 h-20 bg-slate-900 rounded-full flex items-center justify-center mb-6 border border-slate-800">
+                           <DollarSign size={32} className="text-red-500 animate-pulse" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-white mb-2">Quanto dinheiro você está</h3>
+                        <h3 className="text-2xl font-bold text-red-500 mb-4">deixando na mesa?</h3>
+                        <p className="text-xs text-slate-500 font-mono max-w-xs uppercase">Sem auditoria em tempo real, seu lucro é apenas uma estimativa.</p>
                      </div>
-                     <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-1">R$ 2.4M</div>
-                     <div className="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Expansão de Margem</div>
-                     <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">
-                        Varejista multicanal (80 SKUs) identificou <strong className="text-emerald-600">8% de perda oculta</strong> em 3 categorias após BI estratégico. Ajustou precificação e mix em 6 meses.
-                     </p>
-                  </div>
-               </Reveal>
-
-               <Reveal delay={300}>
-                  <div className="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
-                     <div className="flex justify-between items-start mb-6">
-                        <div className="p-3 bg-purple-50 rounded-xl"><ShieldCheck size={20} className="text-purple-600 md:w-6 md:h-6"/></div>
-                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wide bg-slate-100 text-slate-500 px-2 py-1 rounded">Serviços Financeiros</span>
-                     </div>
-                     <div className="text-3xl md:text-4xl font-bold text-purple-600 mb-1">35% ↓</div>
-                     <div className="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Inadimplência Evitada</div>
-                     <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">
-                        Financeira B2B implementou modelo preditivo de churn. Sistema alertou <strong className="text-purple-600">850 clientes de alto risco</strong> antes do default, permitindo negociação.
-                     </p>
                   </div>
                </Reveal>
             </div>
          </div>
       </section>
 
-      {/* 4. QUALIFICAÇÃO */}
-      <section id="qualificacao" className="py-16 md:py-20 bg-white">
-        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
-          <Reveal>
-             <div className="text-center mb-12 md:mb-16">
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4">A Pulse é uma consultoria "Boutique"</h2>
-                <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto px-4">Não somos uma fábrica de software genérica. Somos especialistas em operações de alta complexidade.</p>
-             </div>
-          </Reveal>
+      {/* 3.5 PARA QUEM É (QUALIFICAÇÃO CIRÚRGICA) */}
+      <section id="qualificacao" className="py-16 md:py-20 bg-[#050b1d] border-t border-slate-800">
+         <div className="container mx-auto px-6 max-w-6xl">
+            <Reveal>
+               <div className="text-center mb-16">
+                  <h2 className="text-2xl md:text-3xl font-bold text-white">Pulse O.S. é uma Implementação Cirúrgica</h2>
+                  <p className="text-slate-400 mt-2">Nós resolvemos problemas específicos de empresas em crescimento.</p>
+               </div>
+            </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-             <Reveal delay={100}>
-                <div className="bg-white p-6 md:p-10 rounded-3xl border-t-4 border-emerald-500 shadow-2xl shadow-emerald-900/5 h-full relative overflow-hidden">
-                   <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-emerald-50 rounded-bl-full -mr-12 -mt-12 md:-mr-16 md:-mt-16 z-0"></div>
-                   <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-6 md:mb-8 flex items-center gap-3 relative z-10">
-                      <div className="p-2 bg-emerald-100 rounded-lg"><CheckCircle2 className="text-emerald-600" size={20}/></div>
-                      PARA QUEM É A PULSE
-                   </h3>
-                   <ul className="space-y-4 md:space-y-6 relative z-10">
-                      <li className="flex items-start gap-3 md:gap-4">
-                         <div className="mt-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-500 shrink-0"></div>
-                         <span className="text-slate-700 text-sm md:text-base leading-relaxed">Empresas em fase de <strong>expansão ou consolidação</strong> de mercado.</span>
-                      </li>
-                      <li className="flex items-start gap-3 md:gap-4">
-                         <div className="mt-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-500 shrink-0"></div>
-                         <span className="text-slate-700 text-sm md:text-base leading-relaxed">Operações com <strong>alto volume transacional</strong> e processos manuais críticos.</span>
-                      </li>
-                      <li className="flex items-start gap-3 md:gap-4">
-                         <div className="mt-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-500 shrink-0"></div>
-                         <span className="text-slate-700 text-sm md:text-base leading-relaxed">Diretorias que buscam <strong>auditoria, governança e previsibilidade</strong>.</span>
-                      </li>
-                      <li className="flex items-start gap-3 md:gap-4">
-                         <div className="mt-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-500 shrink-0"></div>
-                         <span className="text-slate-700 text-sm md:text-base leading-relaxed">Empresas prontas para investir em transformação estruturada (R$ 80k+).</span>
-                      </li>
-                   </ul>
-                </div>
-             </Reveal>
+            <div className="grid md:grid-cols-2 gap-8">
+               {/* COLUNA ESQUERDA - PARA QUEM É */}
+               <Reveal delay={100}>
+                  <div className="bg-emerald-900/10 border border-emerald-500/20 p-8 rounded-2xl h-full">
+                     <div className="flex items-center gap-3 mb-6">
+                        <CheckCircle2 className="text-emerald-400" size={24}/>
+                        <h3 className="text-xl font-bold text-white">PARA QUEM É</h3>
+                     </div>
+                     <ul className="space-y-4">
+                        {[
+                           "Empresas em crescimento rápido (A operação atropelou a gestão)",
+                           "Operações de alta complexidade (Múltiplos canais/filiais)",
+                           "Equipes sobrecarregadas (Muito trabalho manual)",
+                           "Dados descentralizados (Cada área tem sua 'verdade')",
+                           "Necessidade de Governança (Auditoria, LGPD, ISO)",
+                           "Já possui Microsoft 365 e quer extrair ROI da Power Platform"
+                        ].map((item, i) => (
+                           <li key={i} className="flex gap-3 text-sm text-slate-300">
+                              <span className="text-emerald-500 font-bold">✓</span> {item}
+                           </li>
+                        ))}
+                     </ul>
+                     <div className="mt-8 pt-6 border-t border-emerald-500/20">
+                        <p className="text-xs text-emerald-400 font-mono uppercase tracking-wide">PERFIL TÍPICO</p>
+                        <p className="text-sm text-slate-300 mt-1">Perfil Típico: R$ 15M a R$ 200M/ano • Times de 20 a 500 pessoas</p>
+                     </div>
+                  </div>
+               </Reveal>
 
-             <Reveal delay={200}>
-                <div className="bg-slate-50 p-6 md:p-10 rounded-3xl border-t-4 border-slate-300 h-full opacity-90 md:opacity-80 hover:opacity-100 transition-opacity">
-                   <h3 className="text-xl md:text-2xl font-bold text-slate-500 mb-6 md:mb-8 flex items-center gap-3">
-                      <div className="p-2 bg-slate-200 rounded-lg"><XCircle className="text-slate-400" size={20}/></div>
-                      PARA QUEM NÃO É
-                   </h3>
-                   <ul className="space-y-4 md:space-y-6">
-                      <li className="flex items-start gap-3 md:gap-4">
-                         <div className="mt-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-slate-400 shrink-0"></div>
-                         <span className="text-slate-500 text-sm md:text-base leading-relaxed">Startups em fase inicial (pre-revenue) ou operações muito pequenas.</span>
-                      </li>
-                      <li className="flex items-start gap-3 md:gap-4">
-                         <div className="mt-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-slate-400 shrink-0"></div>
-                         <span className="text-slate-500 text-sm md:text-base leading-relaxed">Estruturas muito enxutas ou ainda sem hierarquia definida.</span>
-                      </li>
-                      <li className="flex items-start gap-3 md:gap-4">
-                         <div className="mt-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-slate-400 shrink-0"></div>
-                         <span className="text-slate-500 text-sm md:text-base leading-relaxed">Quem busca soluções "quebra-galho" sem preocupação com segurança.</span>
-                      </li>
-                      <li className="flex items-start gap-3 md:gap-4">
-                         <div className="mt-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-slate-400 shrink-0"></div>
-                         <span className="text-slate-500 text-sm md:text-base leading-relaxed">Empresas que não usam o ecossistema <strong>Microsoft/Cloud</strong>.</span>
-                      </li>
-                   </ul>
-                </div>
-             </Reveal>
-          </div>
-        </div>
+               {/* COLUNA DIREITA - NÃO É PARA */}
+               <Reveal delay={200}>
+                  <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl h-full opacity-80 hover:opacity-100 transition-opacity">
+                     <div className="flex items-center gap-3 mb-6">
+                        <XCircle className="text-slate-500" size={24}/>
+                        <h3 className="text-xl font-bold text-slate-400">NÃO É PARA VOCÊ SE</h3>
+                     </div>
+                     <ul className="space-y-4">
+                        {[
+                           "Busca uma solução 'quebra-galho' sem processo",
+                           "Não utiliza (e não quer usar) o ecossistema Microsoft",
+                           "Ainda não tem produto/serviço validado (fase de ideia)",
+                           "Quer resultado mágico sem investir em reestruturação",
+                           "Estruturas muito enxutas sem hierarquia definida"
+                        ].map((item, i) => (
+                           <li key={i} className="flex gap-3 text-sm text-slate-500">
+                              <span className="text-slate-600 font-bold">✕</span> {item}
+                           </li>
+                        ))}
+                     </ul>
+                     <div className="mt-8 pt-6 border-t border-slate-800">
+                        <p className="text-xs text-slate-500 font-mono uppercase tracking-wide">NOTA</p>
+                        <p className="text-sm text-slate-500 mt-1">Se sua empresa é menor, mas tem a dor latente, temos a opção da Sprint Tática.</p>
+                     </div>
+                  </div>
+               </Reveal>
+            </div>
+         </div>
       </section>
 
-      {/* 5. SOLUÇÕES */}
-      <section id="solucoes" className="py-16 md:py-20 bg-slate-50">
-        <div className="container mx-auto px-4 md:px-6">
+      {/* 4. METODOLOGIA */}
+      <section id="metodologia" className="py-16 md:py-24 bg-[#0B1120] border-t border-slate-800">
+         <div className="container mx-auto px-6">
+            <Reveal>
+               <div className="text-center mb-20">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Pulse O.S.</h2>
+                  <p className="text-slate-400">Engenharia Operacional em 4 Camadas</p>
+               </div>
+            </Reveal>
+
+            <div className="relative max-w-5xl mx-auto">
+               <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-blue-900/50 via-emerald-900/50 to-blue-900/50 -z-10"></div>
+
+               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  {[
+                     { step: "01", title: "Mining", icon: <Microscope size={20}/>, desc: "Ressonância do Processo. A tecnologia aponta onde está o erro.", color: "text-blue-400", bg: "bg-blue-900/20", border: "border-blue-500/30" },
+                     { step: "02", title: "Digitizing", icon: <Smartphone size={20}/>, desc: "Apps e Agentes. O dado nasce digital, validado e seguro.", color: "text-indigo-400", bg: "bg-indigo-900/20", border: "border-indigo-500/30" },
+                     { step: "03", title: "Centralizing", icon: <Database size={20}/>, desc: "Data Lake auditável. Fonte única de verdade.", color: "text-emerald-400", bg: "bg-emerald-900/20", border: "border-emerald-500/30" },
+                     { step: "04", title: "Predicting", icon: <BrainCircuit size={20}/>, desc: "IA que prevê o futuro (Churn, Demanda, Risco).", color: "text-purple-400", bg: "bg-purple-900/20", border: "border-purple-500/30" }
+                  ].map((item, i) => (
+                     <Reveal key={i} delay={i * 150}>
+                        <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-800 transition-colors h-full">
+                           <div className={`w-12 h-12 rounded-xl ${item.bg} ${item.color} ${item.border} border flex items-center justify-center mb-6 z-10 relative`}>
+                              {item.icon}
+                              <div className="absolute -top-3 -right-3 bg-[#020617] text-slate-500 text-[10px] font-bold w-6 h-6 flex items-center justify-center rounded-full border border-slate-800">{item.step}</div>
+                           </div>
+                           <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
+                           <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
+                        </div>
+                     </Reveal>
+                  ))}
+               </div>
+            </div>
+         </div>
+      </section>
+
+      {/* 5. VELOCIDADE (Sprint) */}
+      <section id="velocidade" className="py-16 md:py-24 bg-[#020617] border-t border-slate-800">
+         <div className="container mx-auto px-6">
+            <Reveal>
+               <div className="max-w-3xl mx-auto text-center mb-16">
+                  <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded bg-orange-500/10 text-orange-400 text-xs font-bold uppercase border border-orange-500/20">
+                     <Rocket size={14}/> Time-to-Value
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Não espere 6 meses para ver o ROI.</h2>
+                  <p className="text-slate-400">
+                     Consultorias tradicionais entregam PowerPoints. Nós entregamos Soluções. Nossa metodologia ágil garante a primeira entrega de valor (MVP) em tempo recorde.
+                  </p>
+               </div>
+            </Reveal>
+
+            <div className="max-w-3xl mx-auto space-y-4">
+               {/* Timeline Item 1 - Sprint Tática */}
+               <Reveal delay={100}>
+                  <div className="flex flex-col md:flex-row gap-6 p-6 rounded-2xl bg-gradient-to-r from-emerald-900/10 to-slate-900 border border-emerald-500/30 relative overflow-hidden group">
+                     <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500"></div>
+                     <div className="md:w-1/4">
+                        <span className="text-emerald-400 font-mono text-sm font-bold uppercase tracking-wider block mb-1">Dias 1-15</span>
+                        <h3 className="text-xl font-bold text-white">Sprint Tática</h3>
+                        <span className="text-xs text-slate-500 uppercase">(O MVP de Valor Imediato)</span>
+                     </div>
+                     <div className="md:w-3/4">
+                        <p className="text-sm text-slate-300 mb-4">O ROI acontece aqui. Entregamos:</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                           <div className="bg-slate-950 px-3 py-2 rounded border border-slate-800 text-xs text-slate-300 flex items-center gap-2">
+                              <CheckCircle2 size={12} className="text-emerald-500 shrink-0"/> 1 Processo Crítico (Mapeamento & Otimização)
+                           </div>
+                           <div className="bg-slate-950 px-3 py-2 rounded border border-slate-800 text-xs text-slate-300 flex items-center gap-2">
+                              <CheckCircle2 size={12} className="text-emerald-500 shrink-0"/> 1 Power App Corporativo (Input Seguro)
+                           </div>
+                           <div className="bg-slate-950 px-3 py-2 rounded border border-slate-800 text-xs text-slate-300 flex items-center gap-2">
+                              <CheckCircle2 size={12} className="text-emerald-500 shrink-0"/> 1 Dashboard de Controle (Power BI)
+                           </div>
+                           <div className="bg-slate-950 px-3 py-2 rounded border border-slate-800 text-xs text-slate-300 flex items-center gap-2">
+                              <CheckCircle2 size={12} className="text-emerald-500 shrink-0"/> Plano de Expansão (Roadmap de Governança)
+                           </div>
+                        </div>
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs border-t border-slate-800/50 pt-4 gap-2">
+                           <span className="text-slate-400 font-medium">Modelo: <span className="text-white">Preço Fixo por Entrega (Sem custos ocultos)</span></span>
+                           <span className="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20">SLA: 15 Dias Corridos (Garantidos em Contrato)</span>
+                        </div>
+                     </div>
+                  </div>
+               </Reveal>
+
+               {/* Timeline Item 2 */}
+               <Reveal delay={200}>
+                  <div className="flex flex-col md:flex-row gap-6 p-6 rounded-2xl bg-slate-900 border border-slate-800 opacity-80 hover:opacity-100 transition-opacity">
+                     <div className="md:w-1/4">
+                        <span className="text-blue-400 font-mono text-sm font-bold uppercase tracking-wider block mb-1">Mês 2-4</span>
+                        <h3 className="text-xl font-bold text-white">Pulse Build</h3>
+                        <span className="text-xs text-slate-500 uppercase">(A Escala)</span>
+                     </div>
+                     <div className="md:w-3/4">
+                        <p className="text-sm text-slate-400 mb-2">Expansão para toda a empresa. Criação do Data Lake e Governança completa.</p>
+                     </div>
+                  </div>
+               </Reveal>
+
+               {/* Timeline Item 3 */}
+               <Reveal delay={300}>
+                  <div className="flex flex-col md:flex-row gap-6 p-6 rounded-2xl bg-slate-900 border border-slate-800 opacity-40 hover:opacity-100 transition-opacity">
+                     <div className="md:w-1/4">
+                        <span className="text-purple-400 font-mono text-sm font-bold uppercase tracking-wider block mb-1">Mês 5+</span>
+                        <h3 className="text-xl font-bold text-white">Pulse Guardian</h3>
+                        <span className="text-xs text-slate-500 uppercase">(A Governança)</span>
+                     </div>
+                     <div className="md:w-3/4">
+                        <p className="text-sm text-slate-400">Monitoramento contínuo, IA Preditiva e cadeira no comitê de dados (Fractional CDO).</p>
+                     </div>
+                  </div>
+               </Reveal>
+            </div>
+         </div>
+      </section>
+
+      {/* 6. PULSE CORTEX (DATA SCIENCE) */}
+      <section id="cortex" className="py-16 md:py-24 bg-[#0B1120] relative overflow-hidden border-t border-slate-800">
+         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+         
+         <div className="container mx-auto px-6 relative z-10">
+            <Reveal>
+               <div className="text-center max-w-3xl mx-auto mb-16">
+                  <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-xs font-bold uppercase tracking-wide">
+                     <BrainCircuit size={14}/> Camada de Inteligência
+                  </div>
+                  <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6">Pare de olhar pelo retrovisor.</h2>
+                  <p className="text-lg text-slate-400">
+                     A maioria dos BIs mostra o ontem. O <strong>Pulse Cortex</strong> prevê o amanhã.
+                  </p>
+               </div>
+            </Reveal>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
+               
+               {/* Card 1: Risk */}
+               <Reveal delay={100}>
+                  <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl hover:border-purple-500/50 transition-all hover:-translate-y-1">
+                     <div className="flex justify-between items-start mb-6">
+                        <ShieldCheck size={28} className="text-slate-600"/>
+                        <span className="text-[10px] bg-slate-950 px-2 py-1 rounded text-slate-400 font-mono">RISK_MOD_V1</span>
+                     </div>
+                     <h3 className="text-xl font-bold text-white mb-2">Credit Score B2B</h3>
+                     <p className="text-sm text-slate-400 mb-6">"Quem vai te dar calote mês que vem?" Previsão de inadimplência.</p>
+                     <div className="bg-slate-950 p-3 rounded text-[10px] font-mono text-slate-500">
+                        INPUT: Payment_History<br/>OUTPUT: Risk_Probability (High)
+                     </div>
+                  </div>
+               </Reveal>
+
+               {/* Card 2: Churn */}
+               <Reveal delay={200}>
+                  <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl hover:border-purple-500/50 transition-all hover:-translate-y-1">
+                     <div className="flex justify-between items-start mb-6">
+                        <Radar size={28} className="text-purple-500"/>
+                        <span className="text-[10px] bg-purple-500/10 px-2 py-1 rounded text-purple-400 font-mono">LIVE_TRACKING</span>
+                     </div>
+                     <h3 className="text-xl font-bold text-white mb-2">Churn Radar</h3>
+                     <p className="text-sm text-slate-400 mb-6">"Qual cliente está prestes a cancelar?" Identifique o risco 3 meses antes.</p>
+                     <div className="bg-slate-950 p-3 rounded text-[10px] font-mono text-slate-500">
+                        ALERT: Client_901 usage drop (-40%)
+                     </div>
+                  </div>
+               </Reveal>
+
+               {/* Card 3: Demand */}
+               <Reveal delay={300}>
+                  <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl hover:border-purple-500/50 transition-all hover:-translate-y-1">
+                     <div className="flex justify-between items-start mb-6">
+                        <BarChart4 size={28} className="text-slate-600"/>
+                        <span className="text-[10px] bg-slate-950 px-2 py-1 rounded text-slate-400 font-mono">STOCK_OPT</span>
+                     </div>
+                     <h3 className="text-xl font-bold text-white mb-2">Demand Forecast</h3>
+                     <p className="text-sm text-slate-400 mb-6">"Quanto comprar para não sobrar?" Otimização de estoque via IA.</p>
+                     <div className="bg-slate-950 p-3 rounded text-[10px] font-mono text-slate-500">
+                        FORECAST: +15% Demand Q2 (Seasonal)
+                     </div>
+                  </div>
+               </Reveal>
+            </div>
+
+            {/* AI DISCLAIMER */}
+            <div className="max-w-4xl mx-auto bg-slate-900/50 border border-slate-800 rounded-xl p-4 text-center">
+               <p className="text-xs text-slate-500 font-mono">
+                  ⚠️ GOVERNANÇA DE IA: Todos os modelos são treinados 100% nos seus dados (privacidade total), auditáveis e retreináveis mensalmente. Não usamos IA genérica.
+               </p>
+            </div>
+         </div>
+      </section>
+
+      {/* 7. QUEM SOMOS */}
+      <section id="quem-somos" className="py-16 md:py-24 bg-[#020617] border-t border-slate-800">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <Reveal>
-            <div className="text-center max-w-3xl mx-auto mb-12 md:mb-20">
-              <span className="text-blue-600 font-bold tracking-wider uppercase text-xs md:text-sm border border-blue-200 bg-white px-4 py-1.5 rounded-full">Nossos Pilares</span>
-              <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-slate-900 mt-4 md:mt-6 mb-4 md:mb-6 tracking-tight leading-tight">
-                Tecnologia é meio.<br/> <span className="text-blue-600">Resultado Financeiro</span> é o fim.
-              </h2>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-white mb-4">Office of the CDO</h2>
+              <p className="text-slate-400 max-w-2xl mx-auto">
+                Ao contratar a Pulse, você aluga uma cadeira de <strong className="text-white">Chief Data Officer</strong>.
+              </p>
+              <div className="mt-6 inline-block bg-slate-900/80 border border-emerald-500/30 rounded-lg px-6 py-3">
+                 <p className="text-xs text-slate-400 uppercase tracking-widest mb-1">CUSTO DE MERCADO (CDO/MÊS)</p>
+                 <div className="flex items-end justify-center gap-2">
+                    <span className="text-2xl font-bold text-white line-through decoration-red-500/50 decoration-2">R$ 45.000</span>
+                    <span className="text-sm text-emerald-400 font-bold mb-1">vs. Fração com Pulse</span>
+                 </div>
+              </div>
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid lg:grid-cols-2 gap-8">
             <Reveal delay={100}>
-              <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col group">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 md:mb-8 shadow-sm group-hover:bg-blue-600 transition-colors duration-300">
-                  <Smartphone className="text-slate-700 group-hover:text-white transition-colors duration-300 w-6 h-6 md:w-8 md:h-8" />
-                </div>
-                <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-2">Jornada Digital</h3>
-                <p className="text-xs font-bold text-blue-600 mb-4 md:mb-6 uppercase tracking-wide">Fim do Retrabalho</p>
-                <p className="text-slate-600 mb-6 md:mb-8 leading-relaxed text-sm md:text-base">
-                  Elimine o erro humano operacional. Substituímos planilhas soltas por <strong className="text-blue-600">Aplicativos Seguros (Power Apps)</strong> onde cada clique é auditável.
-                </p>
-                <div className="bg-blue-50 p-4 rounded-xl mb-6 border border-blue-100">
-                   <p className="text-blue-800 text-[10px] md:text-xs font-bold uppercase mb-1">💡 Caso Real</p>
-                   <p className="text-slate-700 text-xs md:text-sm">Distribuidora eliminava 120h/mês recompilando dados de 15 planilhas.</p>
-                </div>
-                <div className="mt-auto pt-6 border-t border-slate-100">
-                  <div className="flex items-center gap-2 text-emerald-600 font-bold text-xs md:text-sm">
-                     <TrendingUp size={16}/> ROI: Redução de Custo
+              <div className="bg-slate-900 rounded-2xl p-8 border border-slate-800 flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left">
+                  <div className="w-24 h-24 shrink-0 rounded-full overflow-hidden border-2 border-slate-700">
+                      <SafeAvatar src="https://drive.google.com/thumbnail?id=10hDQlBxrz6mwTOg7NjkwDq83kFA2hQzb&sz=w1000" alt="Felipe Belisário" initials="FB" colorClass="bg-blue-900" />
                   </div>
-                </div>
+                  <div>
+                     <h3 className="text-xl font-bold text-white">Felipe Belisário</h3>
+                     <p className="text-blue-400 text-xs font-mono uppercase tracking-wider mb-2">Head de Estratégia</p>
+                     <ul className="text-sm text-slate-400 space-y-2 mb-4 text-left">
+                        <li>• Motor de crédito R$1Bi/dia (Santander)</li>
+                        <li>• Reduziu 40% tempo de análise (Itaú)</li>
+                        <li>• Prêmio Inovação Acadêmica (FGV)</li>
+                        <li>• Especialista Power Platform & Azure</li>
+                     </ul>
+                     <div className="flex gap-4 justify-center sm:justify-start">
+                        <Linkedin className="text-slate-600 hover:text-white cursor-pointer" size={18}/>
+                        <Mail className="text-slate-600 hover:text-white cursor-pointer" size={18}/>
+                     </div>
+                  </div>
               </div>
             </Reveal>
 
             <Reveal delay={200}>
-              <div className="bg-[#0B1120] rounded-3xl p-6 md:p-8 border border-slate-700 shadow-2xl hover:shadow-blue-900/20 transition-all duration-300 transform md:scale-105 h-full flex flex-col group relative z-10 ring-2 ring-blue-500/20">
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-[9px] md:text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-20">NOSSO DNA</span>
-                <div className="absolute inset-0 rounded-3xl overflow-hidden z-0 pointer-events-none">
-                    <div className="absolute top-0 right-0 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl group-hover:bg-blue-600/20 transition-all"></div>
-                </div>
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-slate-800 rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:bg-white transition-colors duration-300 relative z-10">
-                  <Database className="text-white group-hover:text-[#0B1120] transition-colors duration-300 w-6 h-6 md:w-8 md:h-8" />
-                </div>
-                <h3 className="text-xl md:text-2xl font-bold text-white mb-2 relative z-10">Inteligência de Dados</h3>
-                <p className="text-xs font-bold text-blue-400 mb-4 md:mb-6 uppercase tracking-wide relative z-10">Lucro em Tempo Real</p>
-                <p className="text-slate-400 mb-6 md:mb-8 leading-relaxed text-sm md:text-base relative z-10">
-                  Chega de decidir no escuro. Construímos a <strong className="text-blue-400">Verdade Única dos Dados</strong>. Saiba qual produto drena sua margem líquida.
-                </p>
-                <div className="bg-slate-800 p-4 rounded-xl mb-6 border border-slate-700 relative z-10">
-                   <p className="text-blue-300 text-[10px] md:text-xs font-bold uppercase mb-1">💡 Caso Real</p>
-                   <p className="text-slate-300 text-xs md:text-sm">Varejista descobriu 8% de perda oculta e recuperou R$2.4M em 6 meses.</p>
-                </div>
-                <div className="mt-auto pt-6 border-t border-slate-800 relative z-10">
-                  <div className="flex items-center gap-2 text-blue-400 font-bold text-xs md:text-sm">
-                     <Target size={16}/> ROI: Decisão Estratégica
+              <div className="bg-slate-900 rounded-2xl p-8 border border-slate-800 flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left">
+                  <div className="w-24 h-24 shrink-0 rounded-full overflow-hidden border-2 border-slate-700">
+                      <SafeAvatar src="https://drive.google.com/thumbnail?id=1pA1JSUXZ4se7nlJLDPGrDj4CjhzT43Nv&sz=w1000" alt="Késsia Natany" initials="KN" colorClass="bg-purple-900" />
                   </div>
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={300}>
-              <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col group">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 md:mb-8 shadow-sm group-hover:bg-purple-600 transition-colors duration-300">
-                  <BrainCircuit className="text-slate-700 group-hover:text-white transition-colors duration-300 w-6 h-6 md:w-8 md:h-8" />
-                </div>
-                <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-2">IA & Risco Preditivo</h3>
-                <p className="text-xs font-bold text-purple-600 mb-4 md:mb-6 uppercase tracking-wide">Proteção de Caixa</p>
-                <p className="text-slate-600 mb-6 md:mb-8 leading-relaxed text-sm md:text-base">
-                  Não espere o cliente deixar de pagar. Utilizamos modelos estatísticos para <strong className="text-purple-600">prever inadimplência</strong> antes que ela aconteça.
-                </p>
-                <div className="bg-purple-50 p-4 rounded-xl mb-6 border border-purple-100">
-                   <p className="text-purple-800 text-[10px] md:text-xs font-bold uppercase mb-1">💡 Caso Real</p>
-                   <p className="text-slate-700 text-xs md:text-sm">Modelo alertou 850 clientes de risco e evitou 35% de inadimplência.</p>
-                </div>
-                <div className="mt-auto pt-6 border-t border-slate-100">
-                  <div className="flex items-center gap-2 text-purple-600 font-bold text-xs md:text-sm">
-                     <ShieldCheck size={16}/> ROI: Prevenção de Perdas
+                  <div>
+                     <h3 className="text-xl font-bold text-white">Késsia Natany</h3>
+                     <p className="text-purple-400 text-xs font-mono uppercase tracking-wider mb-2">Lead Data Scientist</p>
+                     <ul className="text-sm text-slate-400 space-y-2 mb-4 text-left">
+                        <li>• Gestão de portfólio R$20Bi (Bradesco)</li>
+                        <li>• Lead Scientist (C6 Bank - Fraude)</li>
+                        <li>• Machine Learning em Produção</li>
+                        <li>• Mestrado em Estatística Aplicada</li>
+                     </ul>
+                     <div className="flex gap-4 justify-center sm:justify-start">
+                        <Linkedin className="text-slate-600 hover:text-white cursor-pointer" size={18}/>
+                        <Mail className="text-slate-600 hover:text-white cursor-pointer" size={18}/>
+                     </div>
                   </div>
-                </div>
               </div>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* 6. METODOLOGIA */}
-      <section id="metodologia" className="py-16 md:py-20 bg-white relative overflow-hidden">
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center mb-12 md:mb-16">
-             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Nosso Processo</h2>
-             <p className="text-slate-600 text-base md:text-lg">Liderança executiva, execução técnica.</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-             <div className="flex flex-col items-center text-center p-6 bg-slate-50 md:bg-transparent rounded-2xl md:rounded-none">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl md:text-2xl mb-4 md:mb-6 shadow-sm"><Target size={28}/></div>
-                <h4 className="font-bold text-lg md:text-xl text-slate-900 mb-2">1. Mapeamento</h4>
-                <div className="text-xs font-bold bg-slate-200 text-slate-600 px-2 py-1 rounded mb-3 inline-block">2 Semanas</div>
-                <p className="text-slate-600 text-sm leading-relaxed">Diagnóstico profundo. Entendemos o risco e o financeiro antes de codar.</p>
-             </div>
-             
-             {/* Connector for Desktop */}
-             <div className="hidden md:block absolute top-1/2 left-1/3 w-1/3 h-0.5 bg-slate-100 -z-10 transform -translate-y-12"></div>
-
-             <div className="flex flex-col items-center text-center p-6 bg-slate-50 md:bg-transparent rounded-2xl md:rounded-none">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl md:text-2xl mb-4 md:mb-6 shadow-sm"><Zap size={28}/></div>
-                <h4 className="font-bold text-lg md:text-xl text-slate-900 mb-2">2. Implementação</h4>
-                <div className="text-xs font-bold bg-slate-200 text-slate-600 px-2 py-1 rounded mb-3 inline-block">Sprints Ágeis</div>
-                <p className="text-slate-600 text-sm leading-relaxed">Squads dedicadas. Entregas a cada 15 dias. Você vê o resultado na tela.</p>
-             </div>
-
-             <div className="flex flex-col items-center text-center p-6 bg-slate-50 md:bg-transparent rounded-2xl md:rounded-none">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-bold text-xl md:text-2xl mb-4 md:mb-6 shadow-sm"><LineChart size={28}/></div>
-                <h4 className="font-bold text-lg md:text-xl text-slate-900 mb-2">3. Mensuração</h4>
-                <div className="text-xs font-bold bg-slate-200 text-slate-600 px-2 py-1 rounded mb-3 inline-block">Contínuo</div>
-                <p className="text-slate-600 text-sm leading-relaxed">Dashboard de ROI auditável. Você saberá exatamente quanto economizou.</p>
-             </div>
-          </div>
-          
-          <div className="max-w-md mx-auto mt-10 md:mt-12 bg-slate-50 border border-slate-200 rounded-xl p-4 text-center">
-             <p className="text-xs md:text-sm text-slate-600 font-medium">⏱️ Tempo médio do processo completo: <span className="text-slate-900 font-bold">12 a 20 semanas</span></p>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. QUEM SOMOS (REFATORADA) */}
-      <section id="quem-somos" className="py-16 md:py-20 bg-slate-50 border-t border-slate-200">
-        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
-          <Reveal>
-            <div className="text-center mb-12 md:mb-16">
-              <span className="text-blue-600 font-bold tracking-wider uppercase text-xs md:text-sm border border-blue-200 bg-white px-4 py-1.5 rounded-full shadow-sm">Quem Lidera Sua Transformação</span>
-              <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-slate-900 mt-4 md:mt-6 mb-4 tracking-tight leading-tight">
-                Engenheiros de Bancos Tier 1
-              </h2>
-              <div className="flex justify-center items-center gap-2 text-slate-500 font-medium text-sm md:text-base">
-                 <ShieldCheck size={20} className="text-blue-600"/>
-                 <span>+14 anos combinados construindo infraestrutura crítica</span>
-              </div>
+      {/* 8. CASES */}
+      <section id="cases" className="py-24 bg-[#0B1120] border-t border-slate-800">
+         <div className="container mx-auto px-6">
+            <h2 className="text-2xl font-bold text-white text-center mb-12">Números Auditáveis</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+               <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center hover:border-emerald-500/30 transition-colors">
+                  <div className="text-emerald-400 font-bold text-4xl mb-2">R$ 2.4M</div>
+                  <div className="text-xs font-mono text-slate-500 uppercase mb-4">Recuperados em 6 meses</div>
+                  <p className="text-sm text-slate-400">Varejista Multicanal.<br/>Auditoria de Margem (80 SKUs).</p>
+                  <span className="text-[10px] text-emerald-600 font-bold mt-4 block">ROI: 340%</span>
+               </div>
+               <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center hover:border-blue-500/30 transition-colors">
+                  <div className="text-blue-400 font-bold text-4xl mb-2">120h</div>
+                  <div className="text-xs font-mono text-slate-500 uppercase mb-4">Mensais / Eliminadas</div>
+                  <p className="text-sm text-slate-400">Distribuidora.<br/>Automação Comercial/Logística.</p>
+               </div>
+               <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center hover:border-purple-500/30 transition-colors">
+                  <div className="text-purple-400 font-bold text-4xl mb-2">35%</div>
+                  <div className="text-xs font-mono text-slate-500 uppercase mb-4">Menos Inadimplência</div>
+                  <p className="text-sm text-slate-400">Serviços Financeiros.<br/>Modelo Preditivo.</p>
+               </div>
             </div>
-          </Reveal>
-
-          <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
-            
-            {/* Sócio 1: Felipe */}
-            <Reveal delay={100}>
-              <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-slate-200 hover:border-blue-400 transition-colors shadow-sm flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left h-full">
-                  <div className="w-32 h-32 md:w-36 md:h-36 shrink-0 bg-slate-200 rounded-full overflow-hidden border-4 border-slate-50 shadow-md">
-                      {/* URL Segura para Google Drive (thumbnail) */}
-                      <SafeAvatar 
-                        src="https://drive.google.com/thumbnail?id=10hDQlBxrz6mwTOg7NjkwDq83kFA2hQzb&sz=w1000" 
-                        alt="Felipe Belisário" 
-                        initials="FB"
-                        colorClass="bg-blue-600"
-                      />
-                  </div>
-                  <div className="flex-grow w-full min-w-0">
-                     {/* Header reestruturado para evitar quebra */}
-                     <div className="flex flex-col gap-1 mb-3">
-                        <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-2">
-                           <h3 className="text-xl font-bold text-slate-900 text-center sm:text-left">Felipe Belisário</h3>
-                           <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-1 rounded-full border border-amber-200 flex items-center gap-1 shrink-0 whitespace-nowrap"><Award size={10}/> Prêmio de Inovação Acadêmica</span>
-                        </div>
-                        <p className="text-blue-600 text-sm font-bold text-center sm:text-left">Arquiteto de Soluções & Estratégia</p>
-                     </div>
-                     
-                     <div className="flex gap-2 mb-4 flex-wrap justify-center sm:justify-start">
-                        <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-1 rounded border border-slate-200">Santander Corp</span>
-                        <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-1 rounded border border-slate-200">Itaú BBA</span>
-                     </div>
-
-                     <ul className="space-y-2 text-sm text-slate-600 mb-6 text-left">
-                        <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-blue-500 mt-0.5 shrink-0"/> Motor de crédito R$1 bi/dia</li>
-                        <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-blue-500 mt-0.5 shrink-0"/> Reduziu 40% tempo de análise</li>
-                        <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-blue-500 mt-0.5 shrink-0"/> Especialista em MOB e IA</li>
-                     </ul>
-
-                     <div className="flex flex-col sm:flex-row justify-between items-center sm:items-end border-t border-slate-100 pt-4 gap-3 sm:gap-0">
-                        <span className="text-xs text-slate-400 font-bold uppercase tracking-wide">Liderança Técnica em Tier 1</span>
-                        <div className="flex gap-3">
-                           <a href="https://www.linkedin.com/in/felipe-belis%C3%A1rio-36138364" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-blue-600 p-2 hover:bg-slate-50 rounded-lg transition-colors"><Linkedin size={20}/></a>
-                           <a href="mailto:Felipe.belisario@grupo-belisario.com" className="text-slate-400 hover:text-blue-600 p-2 hover:bg-slate-50 rounded-lg transition-colors"><Mail size={20}/></a>
-                        </div>
-                     </div>
-                  </div>
-              </div>
-            </Reveal>
-
-            {/* Sócio 2: Késsia */}
-            <Reveal delay={200}>
-              <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-slate-200 hover:border-purple-400 transition-colors shadow-sm flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left h-full">
-                  <div className="w-32 h-32 md:w-36 md:h-36 shrink-0 bg-slate-200 rounded-full overflow-hidden border-4 border-slate-50 shadow-md">
-                      {/* URL Segura para Google Drive (thumbnail) */}
-                      <SafeAvatar 
-                        src="https://drive.google.com/thumbnail?id=1pA1JSUXZ4se7nlJLDPGrDj4CjhzT43Nv&sz=w1000" 
-                        alt="Késsia Natany" 
-                        initials="KN"
-                        colorClass="bg-purple-600"
-                      />
-                  </div>
-                  <div className="flex-grow w-full min-w-0">
-                     {/* Header reestruturado para evitar quebra */}
-                     <div className="flex flex-col gap-1 mb-3">
-                        <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-2">
-                           <h3 className="text-xl font-bold text-slate-900 text-center sm:text-left">Késsia Natany</h3>
-                           <span className="bg-purple-100 text-purple-800 text-[10px] font-bold px-2 py-1 rounded-full border border-purple-200 flex items-center gap-1 shrink-0 whitespace-nowrap"><Award size={10}/> Lead Scientist</span>
-                        </div>
-                        <p className="text-purple-600 text-sm font-bold text-center sm:text-left">Data Scientist & Operações</p>
-                     </div>
-                     
-                     <div className="flex gap-2 mb-4 flex-wrap justify-center sm:justify-start">
-                        <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-1 rounded border border-slate-200">Bradesco</span>
-                        <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-1 rounded border border-slate-200">C6 Bank</span>
-                     </div>
-
-                     <ul className="space-y-2 text-sm text-slate-600 mb-6 text-left">
-                        <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-purple-500 mt-0.5 shrink-0"/> Gestão de portfólio R$20 bi</li>
-                        <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-purple-500 mt-0.5 shrink-0"/> Prevenção a fraude e risco</li>
-                        <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-purple-500 mt-0.5 shrink-0"/> UX para operações financeiras</li>
-                     </ul>
-
-                     <div className="flex flex-col sm:flex-row justify-between items-center sm:items-end border-t border-slate-100 pt-4 gap-3 sm:gap-0">
-                        <span className="text-xs text-slate-400 font-bold uppercase tracking-wide">Expertise em Analytics e Operações</span>
-                        <div className="flex gap-3">
-                           <a href="https://www.linkedin.com/in/kessianatany" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-purple-600 p-2 hover:bg-slate-50 rounded-lg transition-colors"><Linkedin size={20}/></a>
-                           <a href="mailto:Kessia.Natany@grupo-belisario.com" className="text-slate-400 hover:text-purple-600 p-2 hover:bg-slate-50 rounded-lg transition-colors"><Mail size={20}/></a>
-                        </div>
-                     </div>
-                  </div>
-              </div>
-            </Reveal>
-
-          </div>
-        </div>
+         </div>
       </section>
 
-      {/* 8. FAQ ESTRATÉGICA */}
-      <section id="faq" className="py-16 bg-white border-t border-slate-200">
+      {/* 9. FAQ (NOVO) */}
+      <section id="faq" className="py-20 bg-[#0B1120] border-t border-slate-800">
          <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-            <h2 className="text-2xl font-bold text-slate-900 text-center mb-8 md:mb-10">Perguntas Frequentes</h2>
-            <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-white text-center mb-10">Perguntas Frequentes</h2>
+            <div className="space-y-3">
                {[
-                  { q: "Quanto tempo leva uma implementação típica?", a: "Projetos variam de 8 a 24 semanas. Trabalhamos em sprints de 2 semanas com entregas incrementais. Você vê resultado já na primeira sprint." },
-                  { q: "Preciso migrar toda a operação de uma vez?", a: "Não. Implementamos por etapas (MVP primeiro). Começamos com o processo mais crítico, validamos o resultado e depois escalamos. Sem 'big bang', sem risco operacional." },
-                  { q: "Como funciona o modelo de investimento?", a: "Projetos típicos variam de R$80k a R$300k. Trabalhamos com modelo de retainer mensal (PM as a Service) ou projeto fechado. Primeira sprint pode ser um teste pago (R$15k)." },
-                  { q: "Vocês atendem empresas fora de São Paulo?", a: "Sim. Atuamos 100% remoto quando necessário, com reuniões estratégicas presenciais mensais. Já atendemos clientes em SP, RJ, MG, PR e SC." },
-                  { q: "O que acontece na Sessão de Diagnóstico?", a: "É uma conversa executiva para entendermos o seu cenário. Não vendemos nada nessa reunião. Se houver fit, agendamos uma devolutiva para apresentar um Plano de Ação sob medida." },
-                  { q: "E se eu não ficar satisfeito com a primeira sprint?", a: "Se após a primeira entrega (2 semanas) você não enxergar valor, interrompemos sem custo adicional. Você paga apenas pelo trabalho executado até ali. Sem multas, sem burocracias." }
+                  { q: "Quanto tempo leva a implementação?", a: "Sprint Tática (MVP) em 15 dias. Pulse O.S. completo em 3-5 meses, com entregas quinzenais." },
+                  { q: "Preciso migrar tudo de uma vez?", a: "Não. Começamos com 1 processo crítico (test-drive). Depois escalamos. Sem big-bang, sem risco." },
+                  { q: "Qual o investimento típico?", a: "Sprint Tática: R$25k. Pulse O.S. completo: R$120k-350k. Retainer (Guardian): R$15k-35k/mês." },
+                  { q: "Vocês atendem fora de São Paulo?", a: "Sim. Modelo híbrido: setup presencial + implementação remota + revisões mensais presenciais." },
+                  { q: "O que acontece no Diagnóstico Gratuito?", a: "45min com os sócios. Você apresenta a operação, nós mapeamos riscos e entregamos PDF executivo com 3-5 oportunidades priorizadas. Sem custo." },
+                  { q: "E se minha empresa for menor que o perfil?", a: "Temos 3 caminhos: A Sprint Tática (MVP de Escopo Fechado), o Diagnóstico + Roadmap (Projeto Pontual apenas de Planejamento) ou nossa Lista de Espera." }
                ].map((item, i) => (
-                  <div key={i} className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden">
-                     <button onClick={() => toggleFaq(i)} className="w-full flex justify-between items-center p-4 md:p-5 text-left font-semibold text-slate-800 hover:bg-slate-100 transition-colors text-sm md:text-base">
+                  <div key={i} className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                     <button onClick={() => toggleFaq(i)} className="w-full flex justify-between items-center p-4 text-left font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition-colors text-sm">
                         <span className="pr-4">{item.q}</span>
-                        <div className="p-1 bg-white rounded-lg border border-slate-200 shrink-0">
-                           {openFaq === i ? <ChevronUp size={16} className="text-blue-600"/> : <ChevronDown size={16} className="text-slate-400"/>}
-                        </div>
+                        {openFaq === i ? <ChevronUp size={16} className="text-emerald-500 shrink-0"/> : <ChevronDown size={16} className="text-slate-500 shrink-0"/>}
                      </button>
-                     {openFaq === i && <div className="p-4 md:p-5 pt-0 text-slate-600 text-sm leading-relaxed border-t border-slate-200 mt-2 bg-white">{item.a}</div>}
+                     {openFaq === i && <div className="p-4 pt-0 text-slate-400 text-sm leading-relaxed border-t border-slate-800/50 mt-2">{item.a}</div>}
                   </div>
                ))}
             </div>
          </div>
       </section>
 
-      {/* 9. CTA FINAL (OFERTA) */}
-      <section id="oferta" className="py-16 md:py-24 bg-[#0B1120] relative overflow-hidden">
-        {/* Simulação de textura */}
-        <div className="absolute inset-0 bg-slate-900 opacity-50"></div>
-        <div className="container mx-auto px-6 relative z-10 max-w-4xl text-center">
+      {/* 10. OFFER / CTA */}
+      <section id="oferta" className="py-32 bg-[#020617] relative overflow-hidden border-t border-slate-800">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-900/10 via-[#020617] to-[#020617]"></div>
+        <div className="container mx-auto px-6 relative z-10 text-center max-w-2xl">
           <Reveal>
-            <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
-              Sua operação está pronta <br/> para o próximo nível?
-            </h2>
-            <p className="text-base md:text-lg text-slate-400 mb-8 md:mb-10 font-light max-w-2xl mx-auto">
-              Não entregamos "orçamentos" genéricos. O primeiro passo é uma <strong>Sessão de Diagnóstico (Discovery Call)</strong> para mergulharmos no seu negócio. Sem compromisso de venda.
-            </p>
-            
-            <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 max-w-2xl mx-auto mb-10 text-left relative overflow-hidden group hover:border-blue-500/50 transition-colors">
-               <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <Activity size={100} className="text-blue-500"/>
-               </div>
-               
-               <h4 className="text-white font-bold mb-6 border-b border-slate-700 pb-4 text-sm md:text-base flex justify-between items-center">
-                  <span>O QUE ESPERAR DESTA SESSÃO:</span>
-                  <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded border border-emerald-500/30">VAGAS LIMITADAS Q1</span>
-               </h4>
-               
-               <ul className="space-y-5 text-slate-300 text-xs md:text-sm relative z-10">
-                  <li className="flex items-start gap-4">
-                     <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center shrink-0 border border-blue-500/20">
-                        <Users size={20} className="text-blue-400"/>
-                     </div>
-                     <div>
-                        <strong className="text-white block text-sm mb-1">Diagnóstico "Deep Dive"</strong>
-                        <span className="leading-relaxed text-slate-400">45 minutos exclusivos com os sócios (Felipe e Késsia). Vamos mapear gargalos que você nem sabia que existiam.</span>
-                     </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                     <div className="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center shrink-0 border border-purple-500/20">
-                        <SearchIcon size={20} className="text-purple-400"/>
-                     </div>
-                     <div>
-                        <strong className="text-white block text-sm mb-1">Validação de Fit</strong>
-                        <span className="leading-relaxed text-slate-400">Analisamos se sua maturidade tecnológica atual suporta a aceleração que desenhamos.</span>
-                     </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                     <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center shrink-0 border border-emerald-500/20">
-                        <FileText size={20} className="text-emerald-400"/>
-                     </div>
-                     <div>
-                        <strong className="text-white block text-sm mb-1">A "Proposta" vem depois</strong>
-                        <span className="leading-relaxed text-slate-400">Se houver sinergia, agendamos uma <strong>Sessão de Devolutiva</strong> para apresentar o Mapa de Aceleração completo.</span>
-                     </div>
-                  </li>
+            <div className="bg-slate-900/50 border border-emerald-500/30 p-8 rounded-2xl mb-10 text-left">
+               <h3 className="text-white font-bold mb-6 border-b border-slate-700 pb-4 text-sm flex justify-between items-center">
+                  <span>O QUE VOCÊ RECEBE (SEM CUSTO):</span>
+                  <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded">VAGAS LIMITADAS</span>
+               </h3>
+               <ul className="space-y-4 text-sm text-slate-300 mb-8">
+                  <li className="flex gap-3"><Users size={18} className="text-blue-400"/> 45min com Felipe & Késsia (sócios)</li>
+                  <li className="flex gap-3"><SearchIcon size={18} className="text-purple-400"/> Mapeamento de pontos cegos operacionais</li>
+                  <li className="flex gap-3"><FileText size={18} className="text-emerald-400"/> PDF Executivo: "Mapa de Risco" (3-5 oportunidades)</li>
                </ul>
-               <div className="mt-8 pt-4 border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center text-xs md:text-sm gap-2">
-                  <span className="text-slate-400">Valor de mercado desta sessão: <span className="line-through text-slate-600">R$ 2.000</span></span>
-                  <span className="text-emerald-400 font-bold bg-emerald-950/30 px-3 py-1 rounded-full border border-emerald-500/20">Isento para empresas qualificadas</span>
+               <div className="flex justify-between items-center text-xs pt-4 border-t border-slate-800">
+                  <span className="text-slate-500">Investimento: <span className="text-white font-bold line-through ml-1">R$ 2.000</span></span>
+                  <span className="text-emerald-400 font-bold">R$ 0 (Isento)</span>
                </div>
             </div>
-          </Reveal>
 
-          <Reveal delay={200}>
-             <button 
-               onClick={openWhatsApp}
-               className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white text-lg md:text-xl font-bold py-5 px-12 rounded-xl shadow-[0_0_40px_rgba(37,99,235,0.4)] transition-all hover:scale-[1.01] flex items-center justify-center gap-3 mx-auto active:scale-95 group"
-             >
-               Aplicar para Diagnóstico
+            <h2 className="text-3xl font-extrabold text-white mb-6">
+              Sua operação passa no <br/> <span className="text-emerald-400">Teste de Estresse?</span>
+            </h2>
+            
+            <button onClick={openWhatsApp} className="bg-emerald-500 hover:bg-emerald-400 text-[#020617] text-lg font-bold py-6 px-12 rounded-xl shadow-[0_0_50px_rgba(16,185,129,0.3)] transition-all hover:scale-[1.02] flex items-center justify-center gap-3 mx-auto uppercase tracking-wide group w-full sm:w-auto">
+               SOLICITAR DIAGNÓSTICO ESTRATÉGICO
                <ArrowRight className="group-hover:translate-x-1 transition-transform"/>
              </button>
-             <div className="mt-8 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-slate-500 text-[10px] md:text-xs uppercase tracking-wide font-bold">
-                <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-slate-600"/> NDA Assinado</span>
-                <span className="flex items-center gap-2"><Briefcase size={16} className="text-slate-600"/> Sem Vendedores</span>
-                <span className="flex items-center gap-2"><Clock size={16} className="text-slate-600"/> Agenda Direta</span>
+             
+             <div className="mt-8 flex justify-center gap-6 text-[10px] text-slate-500 font-mono uppercase tracking-wide">
+                <span className="flex items-center gap-1"><ShieldCheck size={12}/> NDA Assinado</span>
+                <span className="flex items-center gap-1"><Briefcase size={12}/> Sessão com Sócios</span>
+                <span className="flex items-center gap-1"><Clock size={12}/> 48h Agenda</span>
              </div>
           </Reveal>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-slate-950 text-slate-400 py-12 md:py-16 border-t border-slate-900 font-light text-sm">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-12 mb-12 md:mb-16">
-            <div className="md:w-1/3 text-center md:text-left">
-              <div className="flex items-center justify-center md:justify-start gap-2.5 mb-6">
-                <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-lg">
-                  <Activity size={18} className="text-white" />
-                </div>
-                <span className="text-xl font-bold tracking-tight text-white">PULSE</span>
-              </div>
-              <p className="leading-relaxed mb-8 max-w-xs mx-auto md:mx-0 text-slate-500">
-                Consultoria de Engenharia de Dados e Governança Corporativa. Transformamos complexidade operacional em eficiência auditável.
-              </p>
-              <div className="flex gap-4 justify-center md:justify-start">
-                <a href="https://www.linkedin.com/in/felipe-belis%C3%A1rio-36138364" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors"><Linkedin size={18} /></a>
-                <a href="mailto:contato@pulseconsultoria.com.br" className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors"><Mail size={18} /></a>
-              </div>
-            </div>
-            
-            <div className="md:w-1/3 flex flex-col md:items-end text-center md:text-right">
-              <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-xs">Navegação</h4>
-              <ul className="space-y-4">
-                <li onClick={() => scrollToSection('quem-somos')} className="cursor-pointer hover:text-white transition-colors">Quem Somos</li>
-                <li onClick={() => scrollToSection('solucoes')} className="cursor-pointer hover:text-white transition-colors">Soluções</li>
-                <li onClick={() => scrollToSection('metodologia')} className="cursor-pointer hover:text-white transition-colors">Metodologia</li>
-                <li onClick={openWhatsApp} className="cursor-pointer hover:text-white transition-colors text-blue-500 font-bold">Agendar Conversa</li>
-              </ul>
-            </div>
-
-            <div className="md:w-1/3 flex flex-col md:items-end text-center md:text-right">
-              <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-xs">Contato</h4>
-              <ul className="space-y-4">
-                <li className="flex md:justify-end items-center justify-center gap-3"><Building2 size={16} className="text-blue-600"/> Alphaville, Barueri - SP</li>
-                <li className="flex md:justify-end items-center justify-center gap-3 cursor-pointer hover:text-white transition-colors" onClick={openWhatsApp}><Smartphone size={16} className="text-blue-600"/> (11) 97753-8041</li>
-                <li className="flex md:justify-end items-center justify-center gap-3"><Mail size={16} className="text-blue-600"/> Felipe.belisario@grupo-belisario.com</li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-center md:text-left text-slate-600">
-            <span>© 2025 Pulse Consultoria. Todos os direitos reservados.</span>
-            <div className="flex gap-6 justify-center">
-               <a href="#" className="hover:text-white transition-colors">Privacidade</a>
-               <a href="#" className="hover:text-white transition-colors">Termos de Uso</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      {/* FOOTER LOGOS */}
+      <div className="py-12 bg-[#020617] border-t border-slate-900 flex justify-center pb-20">
+         <div className="flex gap-8 md:gap-16 opacity-50">
+            <BankLogo src="https://drive.google.com/thumbnail?id=1bXUkbivSYCX8TZ69ymv4SUmuWSYdJRGG&sz=w1000" alt="Itaú" />
+            <BankLogo src="https://drive.google.com/thumbnail?id=1W8XyBIwJxzdSBxkJfmHy4hxNG03mO6mh&sz=w1000" alt="Santander" />
+            <BankLogo src="https://drive.google.com/thumbnail?id=1aj_5IETgqNayEtx0fh42DHVaT-p79-Bk&sz=w1000" alt="C6 Bank" />
+         </div>
+      </div>
     </div>
   );
 }
