@@ -98,7 +98,7 @@ const SafeAvatar = ({ src, alt, initials, colorClass }) => {
 };
 
 const BankLogo = ({ src, alt }) => (
-  <div className="h-10 md:h-14 w-28 md:w-36 flex items-center justify-center transition-all duration-500 hover:scale-105 opacity-40 hover:opacity-100 grayscale hover:grayscale-0">
+  <div className="h-10 md:h-14 w-28 md:w-36 flex items-center justify-center transition-all duration-500 hover:scale-105 opacity-50 hover:opacity-100 grayscale hover:grayscale-0">
     <img 
       src={src} 
       alt={alt} 
@@ -277,33 +277,30 @@ export default function PulseOS() {
       </div>
 
       {/* 1. HERO SECTION */}
-      <section id="hero" className="relative min-h-screen flex flex-col justify-center pt-32 pb-20 overflow-hidden">
+      <section id="hero" className="relative min-h-screen flex flex-col justify-center pt-32 pb-0 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-[#020617] to-[#020617]"></div>
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-soft-light"></div>
         
         <div className="container mx-auto px-4 md:px-6 relative z-10 flex-grow flex items-center">
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 w-full">
             
-            <div className="lg:w-1/2 space-y-8 text-center lg:text-left">
+            <div className="lg:w-1/2 space-y-6 text-center lg:text-left">
               <Reveal delay={100}>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-slate-900 border border-slate-700 text-blue-400 text-[10px] font-mono tracking-widest uppercase">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/80 border border-slate-700 text-blue-400 text-[10px] font-mono tracking-widest uppercase shadow-sm">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
                   Auditoria & Engenharia Operacional
                 </div>
               </Reveal>
 
               <Reveal delay={200}>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
-                  Sua empresa cresceu, mas os números ainda fecham no <span className="text-emerald-400 underline decoration-emerald-500/30 underline-offset-8">Excel</span>?
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight">
+                  Sua empresa cresceu, mas os números ainda fecham no <span className="relative whitespace-nowrap text-white"><span className="absolute bg-red-500/20 -inset-1 rounded blur-sm"></span><span className="relative text-red-400 border-b-4 border-red-500/50">Excel?</span></span>
                 </h1>
               </Reveal>
               
               <Reveal delay={300}>
                 <p className="text-lg text-slate-400 font-light leading-relaxed max-w-xl mx-auto lg:mx-0 border-l-2 border-emerald-500/50 pl-6">
                   Implementamos o <strong>Pulse O.S.</strong>: O sistema operacional que elimina o caos, blinda seus dados e usa IA para prever sua margem futura.
-                </p>
-                <p className="text-sm text-slate-500 mt-4 max-w-lg mx-auto lg:mx-0">
-                  Para empresas em expansão que buscam a segurança e governança de um banco para superar os limites do Excel.
                 </p>
               </Reveal>
               
@@ -314,6 +311,9 @@ export default function PulseOS() {
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform"/>
                   </button>
                 </div>
+                <p className="text-xs text-slate-500 mt-4 text-center lg:text-left flex items-center justify-center lg:justify-start gap-2">
+                  <Lock size={12} /> Sem compromisso. Ideal para empresas em expansão.
+                </p>
               </Reveal>
             </div>
             
@@ -323,11 +323,11 @@ export default function PulseOS() {
                  <div className="relative group transform transition-transform duration-700 hover:scale-[1.01]">
                     <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
                     
-                    {/* MOBILE VISUAL (Simplified Dashboard - Visible only on mobile) */}
+                    {/* MOBILE VISUAL */}
                     <div className="lg:hidden bg-slate-900 border border-slate-700 p-5 rounded-xl relative overflow-hidden shadow-xl mb-8">
                        <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-[10px] font-mono text-slate-500 tracking-widest">PULSE_MOBILE_VIEW</span>
+                          <span className="text-[10px] font-mono text-slate-500 tracking-widest">PULSE_MOBILE</span>
                           <div className="flex gap-1"><div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div></div>
                        </div>
                        <div className="flex justify-between items-end mb-4">
@@ -346,7 +346,7 @@ export default function PulseOS() {
                        </div>
                     </div>
 
-                    {/* DESKTOP VISUAL (Full Dashboard - Hidden on mobile) */}
+                    {/* DESKTOP VISUAL */}
                     <div className="hidden lg:block relative bg-[#0B1120] border border-slate-700 w-full max-w-md rounded-2xl overflow-hidden shadow-2xl mx-auto">
                        <div className="bg-slate-900 px-4 py-3 border-b border-slate-800 flex justify-between items-center backdrop-blur-sm">
                           <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div><div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div><div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div></div>
@@ -367,7 +367,7 @@ export default function PulseOS() {
                              </div>
                           </div>
                           
-                          <div className="bg-slate-950 rounded-lg p-4 border border-slate-800 font-mono text-[10px] leading-relaxed relative overflow-hidden">
+                          <div className="bg-slate-900 rounded-lg p-4 border border-slate-800 font-mono text-[10px] leading-relaxed relative overflow-hidden">
                              <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
                              <div className="space-y-2 opacity-80">
                                 <div className="flex gap-2"><span className="text-slate-500">10:42:01</span><span className="text-emerald-400">[AUDIT]</span><span className="text-slate-300">Excel 'Precificação_V2.xlsx' replaced.</span></div>
@@ -383,11 +383,11 @@ export default function PulseOS() {
           </div>
         </div>
 
-        {/* BANK LOGOS STRIP */}
-        <div className="w-full border-t border-slate-800 bg-[#050b1d] mt-20 py-8">
-           <div className="container mx-auto px-6">
-              <p className="text-center text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-6 font-mono">DNA formado em instituições que processam R$500Bi/ano</p>
-              <div className="flex flex-wrap justify-center gap-12 md:gap-24 opacity-60">
+        {/* BANK LOGOS STRIP (INTEGRATED) */}
+        <div className="w-full border-y border-slate-800/50 bg-[#050b1d]/30 mt-0 py-10 backdrop-blur-sm relative z-20">
+           <div className="container mx-auto px-6 text-center">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-mono mb-8">DNA formado em instituições que processam R$500Bi/ano</p>
+              <div className="flex flex-wrap justify-center gap-12 md:gap-24 opacity-50 hover:opacity-100 transition-opacity duration-500">
                  <BankLogo src="https://drive.google.com/thumbnail?id=1bXUkbivSYCX8TZ69ymv4SUmuWSYdJRGG&sz=w1000" alt="Itaú" />
                  <BankLogo src="https://drive.google.com/thumbnail?id=1W8XyBIwJxzdSBxkJfmHy4hxNG03mO6mh&sz=w1000" alt="Santander" />
                  <BankLogo src="https://drive.google.com/thumbnail?id=1CfUiS1YSi9d0lps8HDgHiN1IWpZShphW&sz=w1000" alt="Bradesco" />
@@ -569,7 +569,7 @@ export default function PulseOS() {
                      </ul>
                      <div className="mt-8 pt-6 border-t border-emerald-500/20">
                         <p className="text-xs text-emerald-400 font-mono uppercase tracking-wide">PERFIL TÍPICO</p>
-                        <p className="text-sm text-slate-300 mt-1">Foco em operações consolidadas com times em expansão.</p>
+                        <p className="text-sm text-slate-300 mt-1">Perfil Típico: R$ 15M a R$ 200M/ano • Times de 20 a 500 pessoas</p>
                      </div>
                   </div>
                </Reveal>
@@ -950,14 +950,55 @@ export default function PulseOS() {
         </div>
       </section>
 
-      {/* FOOTER LOGOS */}
-      <div className="py-12 bg-[#020617] border-t border-slate-900 flex justify-center pb-20">
-         <div className="flex gap-8 md:gap-16 opacity-50">
-            <BankLogo src="https://drive.google.com/thumbnail?id=1bXUkbivSYCX8TZ69ymv4SUmuWSYdJRGG&sz=w1000" alt="Itaú" />
-            <BankLogo src="https://drive.google.com/thumbnail?id=1W8XyBIwJxzdSBxkJfmHy4hxNG03mO6mh&sz=w1000" alt="Santander" />
-            <BankLogo src="https://drive.google.com/thumbnail?id=1aj_5IETgqNayEtx0fh42DHVaT-p79-Bk&sz=w1000" alt="C6 Bank" />
-         </div>
-      </div>
+      {/* FOOTER */}
+      <footer className="bg-[#020617] border-t border-slate-900 py-16">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-12 text-sm">
+            <div className="col-span-2">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+                   <Activity size={18} className="text-white"/>
+                </div>
+                <span className="text-xl font-bold text-white tracking-tight">PULSE</span>
+              </div>
+              <p className="text-slate-400 leading-relaxed mb-6 max-w-sm">
+                Engenharia de Dados e Governança Corporativa. Transformamos complexidade operacional em eficiência auditável.
+              </p>
+              <div className="flex gap-4">
+                <Linkedin className="text-slate-500 hover:text-white cursor-pointer transition-colors" size={20}/>
+                <Mail className="text-slate-500 hover:text-white cursor-pointer transition-colors" size={20}/>
+              </div>
+            </div>
+            
+            <div>
+               <h4 className="text-white font-bold mb-6">NAVEGAÇÃO</h4>
+               <ul className="space-y-3 text-slate-400">
+                  <li onClick={() => scrollToSection('problema')} className="cursor-pointer hover:text-emerald-400 transition-colors">O Problema</li>
+                  <li onClick={() => scrollToSection('metodologia')} className="cursor-pointer hover:text-emerald-400 transition-colors">Metodologia</li>
+                  <li onClick={() => scrollToSection('cases')} className="cursor-pointer hover:text-emerald-400 transition-colors">Cases</li>
+                  <li onClick={openWhatsApp} className="cursor-pointer text-emerald-400 font-bold hover:text-white transition-colors">Agendar Conversa</li>
+               </ul>
+            </div>
+
+            <div>
+               <h4 className="text-white font-bold mb-6">CONTATO</h4>
+               <ul className="space-y-3 text-slate-400">
+                  <li className="flex items-center gap-2"><Building2 size={14}/> Alphaville, Barueri - SP</li>
+                  <li className="flex items-center gap-2 cursor-pointer hover:text-white transition-colors" onClick={openWhatsApp}><Smartphone size={14}/> (11) 97753-8041</li>
+                  <li className="flex items-center gap-2"><Mail size={14}/> contato@pulse.com.br</li>
+               </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-slate-900 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600">
+            <span>© 2025 Pulse Consultoria. Todos os direitos reservados.</span>
+            <div className="flex gap-6 mt-4 md:mt-0">
+               <span className="hover:text-white cursor-pointer transition-colors">Privacidade</span>
+               <span className="hover:text-white cursor-pointer transition-colors">Termos</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
