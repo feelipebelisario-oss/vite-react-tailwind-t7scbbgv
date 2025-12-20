@@ -604,39 +604,112 @@ export default function PulseOS() {
          </div>
       </section>
 
-      {/* 4. METODOLOGIA */}
-      <section id="metodologia" className="py-16 md:py-24 bg-[#0B1120] border-t border-slate-800">
-         <div className="container mx-auto px-6">
+      {/* 4. METODOLOGIA (O CICLO DE VALOR PULSE) */}
+      <section id="metodologia" className="py-24 bg-[#0B1120] border-t border-slate-800 relative">
+         {/* Background Glow */}
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+         <div className="container mx-auto px-6 relative z-10">
             <Reveal>
-               <div className="text-center mb-20">
-                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Pulse O.S.</h2>
-                  <p className="text-slate-400">Engenharia Operacional em 4 Camadas</p>
+               <div className="text-center mb-20 max-w-4xl mx-auto">
+                  <span className="text-blue-500 font-mono text-xs uppercase tracking-widest border border-blue-500/20 px-3 py-1 rounded bg-blue-500/5 mb-4 inline-block">O Motor de LTV</span>
+                  <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6">O CICLO DE VALOR PULSE</h2>
+                  <p className="text-lg text-slate-400 font-light leading-relaxed">
+                     Transformamos seu custo de licença Microsoft em <strong className="text-emerald-400">lucro operacional</strong>. Não entregamos um software estático, implementamos uma rotina contínua de digitalização e inteligência.
+                  </p>
                </div>
             </Reveal>
 
-            <div className="relative max-w-5xl mx-auto">
-               <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-blue-900/50 via-emerald-900/50 to-blue-900/50 -z-10"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 relative">
+               {/* Connecting Line (Desktop) */}
+               <div className="hidden lg:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-slate-800 via-blue-900 to-slate-800 -z-10"></div>
 
-               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  {[
-                     { step: "01", title: "Mining", icon: <Microscope size={20}/>, desc: "Ressonância do Processo. A tecnologia aponta onde está o erro.", color: "text-blue-400", bg: "bg-blue-900/20", border: "border-blue-500/30" },
-                     { step: "02", title: "Digitizing", icon: <Smartphone size={20}/>, desc: "Apps e Agentes. O dado nasce digital, validado e seguro.", color: "text-indigo-400", bg: "bg-indigo-900/20", border: "border-indigo-500/30" },
-                     { step: "03", title: "Centralizing", icon: <Database size={20}/>, desc: "Data Lake auditável. Fonte única de verdade.", color: "text-emerald-400", bg: "bg-emerald-900/20", border: "border-emerald-500/30" },
-                     { step: "04", title: "Predicting", icon: <BrainCircuit size={20}/>, desc: "IA que prevê o futuro (Churn, Demanda, Risco).", color: "text-purple-400", bg: "bg-purple-900/20", border: "border-purple-500/30" }
-                  ].map((item, i) => (
-                     <Reveal key={i} delay={i * 150}>
-                        <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-800 transition-colors h-full">
-                           <div className={`w-12 h-12 rounded-xl ${item.bg} ${item.color} ${item.border} border flex items-center justify-center mb-6 z-10 relative`}>
+               {[
+                  { 
+                     step: "1. MAPEAR", 
+                     sub: "Discovery",
+                     title: "Caça ao Desperdício", 
+                     icon: <SearchIcon size={24}/>, 
+                     desc: "O gargalo muda de lugar. Nossa rotina mensal é mapear os processos que ainda rodam em 'planilhas ocultas' (Shadow IT) e desenhar a solução técnica.",
+                     color: "text-blue-400", 
+                     bg: "bg-blue-900/20", 
+                     border: "border-blue-500/30" 
+                  },
+                  { 
+                     step: "2. CONSTRUIR", 
+                     sub: "Build",
+                     title: "Fábrica de Soluções", 
+                     icon: <Zap size={24}/>, 
+                     desc: "Transformamos a planilha em Apps e Robôs usando o Office 365 que você já paga. Criamos a ferramenta certa com travas que impedem o erro humano.",
+                     color: "text-indigo-400", 
+                     bg: "bg-indigo-900/20", 
+                     border: "border-indigo-500/30" 
+                  },
+                  { 
+                     step: "3. AUDITAR", 
+                     sub: "Trust",
+                     title: "Guardião da Verdade", 
+                     icon: <ShieldCheck size={24}/>, 
+                     desc: "Software sem dono quebra. Nós monitoramos a integridade dos dados. Garantimos que o número do Comercial bata centavo a centavo com o Financeiro.",
+                     color: "text-emerald-400", 
+                     bg: "bg-emerald-900/20", 
+                     border: "border-emerald-500/30" 
+                  },
+                  { 
+                     step: "4. PREVER", 
+                     sub: "Predict",
+                     title: "Inteligência Ativa", 
+                     icon: <BrainCircuit size={24}/>, 
+                     desc: "Transformamos o dado auditado em dinheiro. Aplicamos IA para prever cenários futuros (Caixa, Demanda), recalibrando modelos mensalmente.",
+                     color: "text-purple-400", 
+                     bg: "bg-purple-900/20", 
+                     border: "border-purple-500/30" 
+                  }
+               ].map((item, i) => (
+                  <Reveal key={i} delay={i * 150}>
+                     <div className="flex flex-col h-full bg-[#0f172a] border border-slate-800 rounded-2xl p-6 hover:border-slate-600 transition-all duration-300 hover:-translate-y-1 relative group">
+                        <div className="flex justify-between items-start mb-6">
+                           <div className={`w-12 h-12 rounded-xl ${item.bg} ${item.color} ${item.border} border flex items-center justify-center shadow-lg`}>
                               {item.icon}
-                              <div className="absolute -top-3 -right-3 bg-[#020617] text-slate-500 text-[10px] font-bold w-6 h-6 flex items-center justify-center rounded-full border border-slate-800">{item.step}</div>
                            </div>
-                           <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
-                           <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
+                           <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">{item.sub}</span>
                         </div>
-                     </Reveal>
-                  ))}
-               </div>
+                        
+                        <div className="mb-2">
+                           <span className={`text-xs font-bold font-mono ${item.color} block mb-1`}>{item.step}</span>
+                           <h3 className="text-xl font-bold text-white leading-tight">{item.title}</h3>
+                        </div>
+                        
+                        <p className="text-sm text-slate-400 leading-relaxed mt-auto border-t border-slate-800/50 pt-4">
+                           {item.desc}
+                        </p>
+
+                        {/* Arrow for flow indication */}
+                        {i < 3 && (
+                           <div className="hidden lg:block absolute -right-3 top-12 text-slate-700 z-20 bg-[#0f172a] rounded-full p-1">
+                              <ArrowRight size={16}/>
+                           </div>
+                        )}
+                     </div>
+                  </Reveal>
+               ))}
             </div>
+
+            {/* CLOSING / LTV LOCK */}
+            <Reveal delay={600}>
+               <div className="max-w-3xl mx-auto bg-gradient-to-br from-slate-900 to-[#0B1120] border border-slate-800 rounded-2xl p-8 text-center relative overflow-hidden shadow-2xl">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-red-500"></div>
+                  <div className="relative z-10">
+                     <div className="flex items-center justify-center gap-2 mb-4 text-red-400">
+                        <AlertTriangle size={20} />
+                        <span className="text-xs font-bold uppercase tracking-widest">A Entropia é Inevitável</span>
+                     </div>
+                     <p className="text-slate-300 text-lg leading-relaxed italic">
+                        "Sem uma governança ativa, novos processos manuais surgem e a operação tende ao caos em 90 dias. <span className="text-white not-italic font-bold">O Ciclo Pulse é a energia que mantém a ordem, a segurança e o lucro crescendo continuamente.</span>"
+                     </p>
+                  </div>
+               </div>
+            </Reveal>
          </div>
       </section>
 
